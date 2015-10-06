@@ -21,14 +21,12 @@
     "url": "https://github.com/Ambiguous-Cicada/Ambiguous-Cicada/issues"
   },
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.14.0",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "grunt-cli": "^0.1.13",
-    "http": "0.0.0",
-    "https": "^1.0.0",
     "istanbul": "^0.3.21",
     "mongo": "^0.1.0",
     "mongoose": "^4.1.8",
