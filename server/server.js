@@ -21,13 +21,6 @@ var matchCtrl = require('./match/matchController');
 var chatCtrl = require('./chat/chatController');
 var utils = require('./lib/utils');
 
-server.listen(port,function(err){
-  if (err){
-    console.log('unable to listen ',err)
-  } else {
-    console.log('listening on port ',port)
-  }
-});
 
 if( (process.env.NODE_ENV === 'development') || !(process.env.NODE_ENV) ){
   app.use(logger('dev'));
@@ -43,6 +36,8 @@ app.use(session({
 }));
 
 app.use("/", express.static(__dirname + '/../client-web'));
+//new internal dependencies
+var router = require('./routes.js');
 
 // Sockets Connection
 io.sockets.on('connection', function(socket){
@@ -83,32 +78,14 @@ io.of('/chat').on('connection', function (socket) {
   });
 });
 
-// Authentication Routes
-app.post('/signup', function(req, res) {
-  auth.signup(req.body.username, req.body.password)
-  .then(function(result) {
-    res.status(201)
-    .send(result);
-  })
-  .catch(function(err) {
-    res.status(300)
-    .send(err);
-  });
-});
+// Mount router for api
+app.use('/', router);
 
-app.post('/login', function(req, res) {
-  auth.login(req.body.username, req.body.password)
-  .then(function(user) {
-    utils.createSession(req, res, user, function() {
-      res.status(200).send(user);
-    });
-  })
-  .catch(function(err) {
-    res.status(300)
-    .send(err);
-  });
+server.listen(port,function(err){
+  if (err){
+    console.log('unable to listen ',err)
+  } else {
+    console.log('listening on port ',port)
+  }
 });
-
-app.post('/logout', utils.destroySession, function(req, res) {
-  res.status(200).end();
-});
+module.exports = app
