@@ -16,10 +16,8 @@ var port = require('./config.js').port
 var secret = require('./secret.js');
 
 // Internal Dependencies
-var auth = require('./auth/auth');
 var matchCtrl = require('./match/matchController');
 var chatCtrl = require('./chat/chatController');
-var utils = require('./lib/utils');
 
 
 if( (process.env.NODE_ENV === 'development') || !(process.env.NODE_ENV) ){
