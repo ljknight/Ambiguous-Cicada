@@ -12,7 +12,7 @@ var io = require('socket.io').listen(server);
 server.listen(require('./config.js').port);
 
 //config dependencies
-var secret = require('secret.js');
+var secret = require('./secret.js');
 
 // Internal Dependencies
 var auth = require('./auth/auth');
