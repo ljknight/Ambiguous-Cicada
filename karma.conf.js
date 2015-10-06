@@ -9,9 +9,9 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai', 'sinon',],
 
     files: [
-      'client/bower_components/angular/angular.js',
-      'client/bower_components/angular-route/angular-route.js',
-      'client/bower_components/angular-mocks/angular-mocks.js',
+      'client/lib/angular/angular.js',
+      'client/lib/angular-route/angular-route.js',
+      'client/lib/angular-mocks/angular-mocks.js',
       'client/*.js',
       'client/tests/*Test.js',
       'server/test/*-spec.js'
