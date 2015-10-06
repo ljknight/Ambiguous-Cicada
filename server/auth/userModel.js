@@ -11,8 +11,7 @@ var UserSchema = new db.Schema({
   password: {
     type: String,
     required: true
-  },
-  salt: String
+  }
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {
@@ -42,14 +41,13 @@ UserSchema.pre('save', function (next) {
     }
 
     // hash the password along with our new salt
-    bcrypt.hash(user.password, salt, function (err, hash) {
+    bcrypt.hash(user.password, salt, null, function (err, hash) {
       if (err) {
         return next(err);
       }
 
       // override the cleartext password with the hashed one
       user.password = hash;
-      user.salt = salt;
       next();
     });
   });
