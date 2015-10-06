@@ -43,7 +43,7 @@ angular.module('kwiki.auth', [])
   };
 })
 
-.controller('userControl', function ($scope, $rootScope, $location, $window, Users) {
+.controller('UserController', function ($scope, $rootScope, $location, $window, Users) {
   $scope.addUser = function (username, password) {
     var userObject = {
       username: username,
