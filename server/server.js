@@ -8,7 +8,11 @@ var session = require('express-session');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+
 server.listen(require('./config.js').port);
+
+//config dependencies
+var secret = require('./secret.js');
 
 // Internal Dependencies
 var auth = require('./auth/auth');
@@ -23,7 +27,7 @@ if( (process.env.NODE_ENV === 'development') || !(process.env.NODE_ENV) ){
 app.use(cors());
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'vsafklj4kl2j34kl2',
+  secret: secret,
   resave: true,
   saveUninitialized: true
 }));
