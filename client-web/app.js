@@ -8,6 +8,7 @@ angular.module('kwiki', [
 .factory('SocketFactory', ['$location', function ($location) {
   var socketFact = {};
 
+  // LEGACY TODO: the bugfix applied in socket-client/url.js:37 might remove the need for this
   //hacky way to make this work in developer environments at specified port number
   socketFact.host = $location.host() !== "localhost" ? $location.host() : "localhost:3000";
 
@@ -33,6 +34,7 @@ angular.module('kwiki', [
     };
   };
 
+  // TODO: ui-router refactor
   $routeProvider
     .when('/login', {
       templateUrl: 'login.html',

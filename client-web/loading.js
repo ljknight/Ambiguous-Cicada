@@ -3,7 +3,7 @@ angular.module('kwiki.load', [])
 .factory('LoadFactory', ['$location', 'SocketFactory', '$window', '$rootScope', function ($location, SocketFactory, $window, $rootScope) {
   var loadFact = {};
 
-  loadFact.socket = SocketFactory.connect("match");
+  loadFact.socket = SocketFactory.connect('match');
 
   loadFact.postMatch = function () {
     console.log('postMatch gets called')
@@ -11,6 +11,7 @@ angular.module('kwiki.load', [])
     this.socket.on('matched', function (data) {
       $rootScope.chatRoomId = data;
       $rootScope.$apply(function () {
+        // TODO: ui-router refactor
         $location.path('/chat');
       });
     });
@@ -23,6 +24,7 @@ angular.module('kwiki.load', [])
   $scope.disableButton = false;
 
   $scope.submit = function () {
+    // TODO: button gets stuck disabled
     $scope.disableButton = true;
     LoadFactory.postMatch();
   };

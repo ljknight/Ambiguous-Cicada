@@ -3,9 +3,11 @@
 <form>
   <input ng-model='username' type='text' placeholder='username'>
   <input ng-model='password' type='password' placeholder='password'>
+  <!-- TODO: since username/password are modeled on scope, we don't have to pass them here -->
   <input ng-click='addUser(username, password)' type='submit'>
 </form>
 
 </div>
 
+<!-- TODO: ui-router refactor -->
 <a href="/#/login">Log In</a>
