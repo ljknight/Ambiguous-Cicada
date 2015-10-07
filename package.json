@@ -4,7 +4,7 @@
   "description": "setting up kwikis",
   "main": "server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "nodemon --watch server/ server/server.js",
     "test": "grunt test"
   },
   "homepage": "https://github.com/colossal-koalas/Ambiguous-Cicada",
