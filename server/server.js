@@ -59,7 +59,7 @@ io.on('connection',function(socket){
     console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',data.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(socket.chatRoom).emit('chatMessage',data):
+    socket.broadcast.to(socket.chatRoom).emit('chatMessage',data);
   });
 
   //completely disconnect
@@ -72,7 +72,7 @@ io.on('connection',function(socket){
 // Mount router for api
 app.use('/', router);
 
-server.listen(port,function(err){
+httpServer.listen(port,function(err){
   if (err){
     console.log('unable to listen ',err)
   } else {
