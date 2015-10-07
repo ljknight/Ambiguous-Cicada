@@ -54,12 +54,12 @@ io.on('connection',function(socket){
   });
 
   //if client socket emits send message
-  socket.on('sendMessage',function(msg){
+  socket.on('sendMessage',function(data){
     //broadcast message to room that socket is part of
-    console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msg)
+    console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',data.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(socket.chatRoom).emit('message',msg):
+    socket.broadcast.to(socket.chatRoom).emit('chatMessage',data):
   });
 
   //completely disconnect
