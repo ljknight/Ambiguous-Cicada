@@ -1,7 +1,7 @@
-angular.module('kwiki.auth', [])
+angular.module('kwiki.auth', ['services.user'])
 
-.controller('AuthController', ['$scope', '$state', '$rootScope', '$window', 'User', 
-  function ($scope, $rootScope, $state, $window, User) {
+.controller('AuthController', ['$scope', '$state', '$window', 'User', 
+  function ($scope, $state, $window, User) {
     $scope.user = {};
 
     $scope.signUp = function(userObject) {

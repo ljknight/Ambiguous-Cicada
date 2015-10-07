@@ -4,10 +4,10 @@ angular.module('kwiki', [
   'kwiki.chat',
   'services.socket',
   'services.user',
-  'ui-router'
+  'ui.router'
 ])
 
-.config(['$stateProvider', '$urlRouteProvider', function ($stateProvider, $urlRouteProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
   var checkAuth = function (success, failure) {
     failure = failure || '/login';
@@ -24,7 +24,7 @@ angular.module('kwiki', [
     };
   };
 
-  $urlRouteProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 
   $stateProvider
     .state('login', {

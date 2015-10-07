@@ -6,10 +6,10 @@ angular.module('services.user', [])
 
   var current = function(newUsername) {
     if (newUsername !== undefined && typeof newUsername === 'string') {
-      _currentUser = newUsername;
+      _currentUsername = newUsername;
       $window.localStorage.setItem('com.kwiki.username', _currentUser);
     }
-    return _currentUser;
+    return _currentUsername;
   };
 
   var add = function(userObject) {
@@ -27,7 +27,7 @@ angular.module('services.user', [])
       data: userObject
     }).then(function(res) {
       $window.localStorage.setItem('com.kwiki', res.data);
-      User.current(res.data.username);
+      current(res.data.username);
     });
 
   };
