@@ -44,7 +44,8 @@ angular.module('kwiki', [
     })
     .state('chat', {
       templateUrl: 'chat/chat.html',
-      controller: 'ChatController'
+      controller: 'ChatController',
+      url: '/chat'
     });
 
 }]);
