@@ -26,6 +26,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
 
   Socket.on('chatMessage', function(chatMessage) {
     $scope.chatMessages.unshift(chatMessage);
+    $scope.$apply();
   });
 
   $scope.message = {
@@ -36,10 +37,10 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
   $scope.sendMessage = function () {
     if ( $scope.message.text.length ) {
       Socket.emit('sendMessage', $scope.message);
-      // $scope.chatMessages.unshift({
-      //   usermame: this.message.userName,
-      //   text: this.message.text
-      // });
+      $scope.chatMessages.unshift({
+        usermame: this.message.userName,
+        text: this.message.text
+      });
 
       $scope.message.text = '';
     }
