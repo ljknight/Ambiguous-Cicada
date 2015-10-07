@@ -25,5 +25,25 @@
   <script src="services/user.js"></script>
   <script src="app.js"></script>
 
+<div ng-view>
+
+</div>
+
+<!-- libraries -->
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-route/angular-route.js"></script>
+<script src="lib/socket.io-client/socket.io.js"></script>
+
+<!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&signed_in=true&callback=initMap"
+        async defer></script>
+
+<!-- add individual view modules here -->
+<script src="loading.js"></script>
+<script src="auth.js"></script>
+<script src="chat.js"></script>
+<script src="app.js"></script>
+
+
 </body>
 </html> 
