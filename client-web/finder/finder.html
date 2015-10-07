@@ -1,7 +1,5 @@
 <div>
-  <form>
-    <input type="text" placeholder="Enter a zipcode..." ng-model="address">
-    <button ng-click="submit()" ng-disabled="disableButton">Find me a kwiki!</button>
-    <input ng-click='logOut()' type='submit' value="Log Out">
-  </form>
+  <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
+  <div id="map"></div>
+  <button ng-click='submit()'>Find me a kwiki!</button>
 </div>
