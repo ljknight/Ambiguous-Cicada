@@ -31,15 +31,17 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
 
   $scope.message = {
     username: User.current(),
-    text: ''
+    text: '',
+    createdAt: new Date()
   };
 
   $scope.sendMessage = function () {
     if ( $scope.message.text.length ) {
       Socket.emit('sendMessage', $scope.message);
       $scope.chatMessages.unshift({
-        username: this.message.username,
-        text: this.message.text
+        username: this.message.userName,
+        text: this.message.text,
+        createdAt: moment(this.createdAt).fromNow()
       });
 
       $scope.message.text = '';

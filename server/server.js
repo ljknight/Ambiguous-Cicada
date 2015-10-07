@@ -18,24 +18,32 @@ var secret = require('./secret.js');
 
 app.use(bodyParser.json());
 
-app.use(session({
+var sessionMiddleware = session({
   secret: secret,
   resave: true,
   saveUninitialized: true
-}));
+})
+app.use(sessionMiddleware);
 
 app.use("/", express.static(__dirname + '/../client-web'));
 //new internal dependencies
 var router = require('./routes.js');
 
+//mount middleware to io request, now we have access to socket.request.session
+io.use(function(socket,next){
+  sessionMiddleware(socket.request,socket.request.res,next)
+})
 
 //***************** Sockets *******************
 //listen for connection event for incoming sockets
 //store all users that want to find a kwiky
 io.on('connection',function(socket){
-  console.log('Socket '+ socket.id +' connected.');
+  // console.log('Socket '+ socket.id +' connected.');
+
+  console.log('session ',socket.request.session)
 
   socket.on('joinRoom', function(data){
+    console.log('data',data)
     var username = data.username;
     var address = data.address;
     //just binding values to socket for convenience
@@ -54,12 +62,12 @@ io.on('connection',function(socket){
   });
 
   //if client socket emits send message
-  socket.on('sendMessage',function(data){
+  socket.on('sendMessage',function(msgData){
     //broadcast message to room that socket is part of
-    console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',data.text)
+    console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(socket.chatRoom).emit('chatMessage',data);
+    socket.broadcast.to(socket.chatRoom).emit('chatMessage',msgData);
   });
 
   //completely disconnect
