@@ -4,14 +4,14 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
   function($scope, $state, $window, Socket, User) {
     $scope.disableButton = false;
 
-    $scope.place = '';
+    $scope.address = '';
 
     $scope.submit = function() {
       // TODO: button gets stuck disabled
       $scope.disableButton = true;
       Socket.emit('joinRoom', {
         username: User.current(),
-        address: $scope.place
+        address: $scope.address
       });
       // TODO: state transition
       $state.transitionTo('chat');
