@@ -1,6 +1,6 @@
 angular.module('kwiki.map', [])
 
-.controller('MapController', ['$scope', function($scope) {
+.controller('MapController', ['$scope', 'Socket', function($scope) {
   $scope.place_id = '';
 
   function initMap() {
