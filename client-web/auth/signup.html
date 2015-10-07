@@ -1,10 +1,10 @@
 <div>
 <h4>Sign Up</h4>
 <form>
-  <input ng-model='username' type='text' placeholder='username'>
-  <input ng-model='password' type='password' placeholder='password'>
+  <input ng-model='user.username' type='text' placeholder='username'>
+  <input ng-model='user.password' type='password' placeholder='password'>
   <!-- TODO: since username/password are modeled on scope, we don't have to pass them here -->
-  <input ng-click='addUser(username, password)' type='submit'>
+  <input ng-click='signUp(user)' type='submit'>
 </form>
 
 </div>

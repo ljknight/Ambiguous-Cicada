@@ -25,12 +25,12 @@ angular.module('kwiki', [
   $stateProvider
     .state('login', {
       templateUrl: 'auth/login.html',
-      controller: 'UserController',
+      controller: 'AuthController',
       url: '/login'
     })
     .state('signup', {
       templateUrl: 'auth/signup.html',
-      controller: 'UserController',
+      controller: 'AuthController',
       url: '/signup'
     })
     .state('finder', {

@@ -1,8 +1,3 @@
-// var app = angular.module('kwiki', [
-//   'kwiki.loading',
-//   'ng-route'
-//   ])
-
 angular.module('kwiki.chat',['kwiki.load'])
 .factory('ChatFactory', ['$http', '$rootScope', 'SocketFactory', '$window', function ($http, $rootScope, SocketFactory, $window) {
 

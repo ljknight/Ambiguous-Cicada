@@ -6,8 +6,7 @@ angular.module('kwiki.load', [])
   loadFact.socket = SocketFactory.connect('match');
 
   loadFact.postMatch = function () {
-    console.log('postMatch gets called')
-    this.socket.emit('matching', $rootScope.user);
+    this.socket.emit('findKwiki', /*{username: username, address: address}*/);
     this.socket.on('matched', function (data) {
       $rootScope.chatRoomId = data;
       $rootScope.$apply(function () {

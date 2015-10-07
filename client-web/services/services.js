@@ -1,14 +1,69 @@
-angular.module('services', [])
-  .factory('Socket', ['$state', function ($state) {
-    var socket = {};
+var services = angular.module('services', []);
 
-    // LEGACY TODO: the bugfix applied in socket-client/url.js:37 might remove the need for this
-    //hacky way to make this work in developer environments at specified port number
-    socket.host = $location.host() !== "localhost" ? $location.host() : "localhost:3000";
+services.factory('Socket', ['$state', function ($state) {
+  var socket = {};
 
-    socket.connect = function (nameSpace) {
-      return io.connect(nameSpace);
-    };
+  socket.connect = function(namespace) {
+    return io(nameSpace);
+  };
 
-    return socket;
-  }]);
+  return socket;
+}]);
+
+services.factory('User', ['$http', '$state', '$window', function ($http, $state, $window) {
+
+  var _currentUsername = $window.localStorage.getItem('com.kwiki.username');
+
+  var current = function(newUsername) {
+    if (newUsername !== undefined && typeof newUsername === 'string') {
+      _currentUser = newUsername;
+      $window.localStorage.setItem('com.kwiki.username', _currentUser);
+    }
+    return _currentUser;
+  };
+
+  var add = function(userObject) {
+    return $http({
+      method: 'POST',
+      url: '/signup',
+      data: userObject
+    });
+  };
+
+  var logIn = function(userObject) {
+    return $http({
+      method: 'POST',
+      url: '/login',
+      data: userObject
+    }).then(function(res) {
+      $window.localStorage.setItem('com.kwiki', res.data);
+      User.current(res.data.username);
+    });
+
+  };
+
+  var logOut = function() {
+    $http({
+      method: 'POST',
+      url: '/logout'
+    }).then(function (res) {
+      $window.localStorage.removeItem('com.kwiki');
+      $state.transitionTo('login');
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+  };
+
+  var isAuth = function() {
+    return $window.localStorage.getItem('com.kwiki');
+  }
+
+  return {
+    current: current,
+    add: add,
+    logIn: logIn,
+    logOut: logOut,
+    isAuth: isAuth
+  };
+}]);
