@@ -70,7 +70,8 @@ io.on('connection',function(socket){
     socket.leaveRoom(socket.chatRoom);
     console.log(username,' left the room ',address);
     //remove address property on session
-    delete address;
+    delete socket.request.session.user.address;
+
   });
 
   //if client socket emits send message
