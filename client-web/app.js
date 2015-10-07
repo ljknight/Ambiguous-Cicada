@@ -9,21 +9,6 @@ angular.module('kwiki', [
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-  var checkAuth = function (success, failure) {
-    failure = failure || '/login';
-    return {
-      check: function ($location, Users) {
-        if(!!Users.isAuth()){
-          // TODO ui-router refactor
-          $location.path(success);
-        } else {
-          // TODO ui-router refactor
-          $location.path(failure);
-        }
-      }
-    };
-  };
-
   $urlRouterProvider.otherwise('/login');
 
   $stateProvider

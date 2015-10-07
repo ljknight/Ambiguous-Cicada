@@ -24,7 +24,7 @@ gulp.task('karma', function(done) {
 });
 
 gulp.task('build-dev', function() {
-  return gulp.src( clientDepPaths.concat( 'client-web/!(build)/*.js' ) , {base: '.'} )
+  return gulp.src( clientDepPaths.concat( 'client-web/!(build|tests)/*.js' ) , {base: '.'} )
     .pipe(sourcemaps.init())
     .pipe(concat('build.js'))
     .pipe(sourcemaps.write())
@@ -32,7 +32,7 @@ gulp.task('build-dev', function() {
 });
 
 gulp.task('build', function() {
-  return gulp.src( clientMinDepPaths.concat( 'client-web/!(build)/*.js' ) , {base: '.'} )
+  return gulp.src( clientMinDepPaths.concat( 'client-web/!(build|tests)/*.js' ) , {base: '.'} )
     .pipe(sourcemaps.init())
     .pipe(concat('build.js'))
     .pipe(uglify())
