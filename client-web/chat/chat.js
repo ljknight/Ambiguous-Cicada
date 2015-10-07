@@ -31,14 +31,27 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
   });
 
   var message = function(text) {
-    return "User "+User.current() + "msg: "+text.toString()+" "+(new Date()) 
+    return {
+      user:User.current(),
+      text:text.toString(),
+      humanTime:moment(new Date()).fromNow(),
+      createdAt: new Date()
+    } 
   } 
 
+  setInterval(function(){
+    for (var i = 0; i < $scope.chatMessages.length; i++) {
+      console.log($scope.chatMessages[i].humanTime);
+      $scope.chatMessages[i].humanTime = moment($scope.chatMessages[i].createdAt).fromNow()
+    };
+    $scope.$apply();
+  },30*Math.pow(10,3))
+
   $scope.sendMessage = function () {
-    if ( $scope.message.text.length ) {
-      Socket.emit('sendMessage', $scope.message);
-      $scope.chatMessages.unshift(message($scope.message));
-      $scope.message.text = '';
+    if ( $scope.messageInput ) {
+      Socket.emit('sendMessage', $scope.messageInput);
+      $scope.chatMessages.unshift(message($scope.messageInput));
+      $scope.messageInput = '';
     }
   };
 
