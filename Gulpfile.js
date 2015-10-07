@@ -45,7 +45,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest('client-web/build/'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
   var watcher = gulp.watch(['client-web/app.js', 'client-web/!(build|tests)/*.js'], ['build']);
   watcher.on('change', function(event) {
     if (event.type === 'deleted') {                   // if a file is deleted, forget about it
@@ -55,7 +55,7 @@ gulp.task('watch', function() {
   });
 });
 
-gulp.task('watch-dev', function() {
+gulp.task('watch-dev', ['build-dev'], function() {
   var watcher = gulp.watch(['client-web/app.js', 'client-web/!(build|tests)/*.js'], ['build-dev']);
   watcher.on('change', function(event) {
     if (event.type === 'deleted') {                   // if a file is deleted, forget about it
