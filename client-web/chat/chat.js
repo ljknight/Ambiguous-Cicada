@@ -24,24 +24,20 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
 
   $scope.chatMessages = [];
 
-  Socket.on('chatMessage', function(chatMessage) {
-    $scope.chatMessages.unshift(chatMessage);
+  Socket.on('chatMessage', function(text) {
+    console.log(text)
+    $scope.chatMessages.unshift(message(text));
     $scope.$apply();
   });
 
-  $scope.message = {
-    username: User.current(),
-    text: ''
-  };
+  var message = function(text) {
+    return "User "+User.current() + "msg: "+text.toString()+" "+(new Date()) 
+  } 
 
   $scope.sendMessage = function () {
     if ( $scope.message.text.length ) {
       Socket.emit('sendMessage', $scope.message);
-      $scope.chatMessages.unshift({
-        username: this.message.username,
-        text: this.message.text
-      });
-
+      $scope.chatMessages.unshift(message($scope.message));
       $scope.message.text = '';
     }
   };
