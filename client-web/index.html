@@ -10,23 +10,12 @@
   <!-- TODO: ui-view refactor -->
   <div ui-view></div>
 
-  <!-- libraries -->
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
-  <script src="lib/socket.io-client/socket.io.js"></script>
+  <script src="build/build.js"></script>
 
-<!-- Google Maps API -->
-  <!-- API key is linked to our URL -->
+  <!-- Google Maps API -->
+    <!-- API key is linked to our URL -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsHKZz7gdXx1Z54wKfhJNdkSgBQrBl6G8&libraries=places&signed_in=false&callback=initMap"
           async defer></script>
-
-  <!-- add individual view modules here -->
-  <script src="finder/finder.js"></script>
-  <script src="auth/auth.js"></script>
-  <script src="chat/chat.js"></script>
-  <script src="services/socket.js"></script>
-  <script src="services/user.js"></script>
-  <script src="app.js"></script>
 
 </body>
 </html> 
