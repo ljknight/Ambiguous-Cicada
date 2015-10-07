@@ -1,16 +1,6 @@
-var services = angular.module('services', []);
+angular.module('services.user', [])
 
-services.factory('Socket', ['$state', function ($state) {
-  var socket = {};
-
-  socket.connect = function(namespace) {
-    return io(nameSpace);
-  };
-
-  return socket;
-}]);
-
-services.factory('User', ['$http', '$state', '$window', function ($http, $state, $window) {
+.factory('User', ['$http', '$state', '$window', function ($http, $state, $window) {
 
   var _currentUsername = $window.localStorage.getItem('com.kwiki.username');
 

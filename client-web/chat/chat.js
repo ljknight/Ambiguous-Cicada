@@ -1,48 +1,42 @@
-angular.module('kwiki.chat',['kwiki.load'])
-.factory('ChatFactory', ['$http', '$rootScope', 'SocketFactory', '$window', function ($http, $rootScope, SocketFactory, $window) {
+angular.module('kwiki.chat', ['services.socket', 'services.user'])
+// .factory('ChatFactory', ['$http', '$rootScope', 'Socket', '$window', function ($http, $rootScope, Socket, $window) {
 
-  var chatFact = {};
+//   var chatFact = {};
 
-  chatFact.socket = SocketFactory.connect('chat', $rootScope.user);
+//   chatFact.socket = Socket.connect('chat', $rootScope.user);
 
-  chatFact.loadChat = function(callback) {
-    this.socket.emit('loadChat', $rootScope.chatRoomId);
-    this.socket.on('message', function(message) {
-      callback(message);
-    });
-  };
+//   chatFact.loadChat = function(callback) {
+//     this.socket.emit('loadChat', $rootScope.chatRoomId);
+//     this.socket.on('message', function(message) {
+//       callback(message);
+//     });
+//   };
 
-  chatFact.postMessage = function (message, callback) {
-    console.log(message);
-    this.socket.emit('message', message);
-  };
+//   chatFact.postMessage = function (message, callback) {
+//     console.log(message);
+//     this.socket.emit('message', message);
+//   };
 
-  return chatFact;
-}])
+//   return chatFact;
+// }])
 
-.controller('ChatController', ['$scope', '$rootScope', 'ChatFactory', '$interval', 'Users', function ($scope, $rootScope, ChatFactory, $interval, Users) {
+.controller('ChatController', ['$scope', '$rootScope', 'Socket', 'User', function ($scope, $rootScope, Socket, User) {
 
-  $scope.messages = [];
+  $scope.chatMessages = [];
 
   $scope.message = {
-    userName: $rootScope.user.name,
+    username: User.current(),
     text: ''
   };
 
-  $scope.loadChat = function() {
-    ChatFactory.loadChat(function(message) {
-      $scope.messages.unshift(message);
-      $scope.$apply();
-    });
-  };
-
   $scope.sendMessage = function () {
-    if( $scope.message ){
+    if ( $scope.message.text.length ) {
       ChatFactory.postMessage(this.message);
-      $scope.messages.unshift({
+      $scope.chatMessages.unshift({
         userName: this.message.userName,
         text: this.message.text
       });
+
       $scope.message.text = '';
     }
   };
