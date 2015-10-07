@@ -53,7 +53,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         //Invoke getPlace method and returns PlaceResult
         place = autocomplete.getPlace();
         //Store place_id
-        $scope.place = place.place_id;
+        $scope.address = place.place_id;
         //If place has no location, return out of function
         if (!place.geometry) {
           return;
