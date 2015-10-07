@@ -11,6 +11,7 @@ var lobby = new MatchModel(matcher);
 var matchController = {};
 
 matchController.add = function (user, joinChatCallback) {
+	console.log('called matchController add');
   user.join = joinChatCallback;
   return lobby.join(user);
 };
