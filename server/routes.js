@@ -1,4 +1,5 @@
 var router = require('express').Router();
+
 var auth = require('./auth/auth');
 var utils = require('./lib/utils');
 
