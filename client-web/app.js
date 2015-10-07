@@ -35,7 +35,7 @@ angular.module('kwiki', [
     })
     .state('finder', {
       templateUrl: 'finder/finder.html',
-      controller: 'LoadController',
+      controller: 'FinderController',
       url: '/finder'
     })
     .state('chat', {
