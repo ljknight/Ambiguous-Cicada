@@ -1,6 +1,6 @@
 angular.module('kwiki.finder', ['services.socket', 'services.user'])
 
-.controller('FinderController', ['$scope', 'Socket', 'User', function ($scope, Socket, User) {
+.controller('FinderController', ['$scope', '$state', 'Socket', 'User', function ($scope, $state, Socket, User) {
   $scope.disableButton = false;
 
   $scope.address = '';
@@ -10,6 +10,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
     $scope.disableButton = true;
     Socket.emit('joinRoom', {username: User.current(), address: $scope.address});
     // TODO: state transition
+    $state.transitionTo('chat');
   };
 
   $scope.logOut = function () {
