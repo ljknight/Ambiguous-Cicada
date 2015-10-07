@@ -74,13 +74,13 @@ io.on('connection',function(socket){
   });
 
   //if client socket emits send message
-  socket.on('sendMessage',function(msgData){
+  socket.on('sendMessage',function(msg){
     console.log('chatting',socket.request.session)
 
     // console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(address).emit('chatMessage',msgData);
+    socket.broadcast.to(address).emit('chatMessage',msg);
   });
 
   //completely disconnect
