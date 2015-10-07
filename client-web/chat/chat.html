@@ -1,7 +1,7 @@
 <div ng-controller="ChatController" ng-init="loadChat()">
 
   <div>
-    <div ng-repeat="message in messages track by $index">{{ message.text }}</div>
+    <div ng-repeat="chatMessage in chatMessages track by $index">{{ chatMessage.text }}</div>
   </div>
   <form ng-submit="sendMessage()">
     <input ng-model="message.text" type="message" placeholder="Type a message">

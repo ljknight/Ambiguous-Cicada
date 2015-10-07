@@ -1,0 +1,12 @@
+<div>
+<h4>Log In</h4>
+<form>
+  <input ng-model='user.username' type='text' placeholder='username'>
+  <input ng-model='user.password' type='password' placeholder='password'>
+  <!-- TODO: since username/password are modeled on scope, we don't need to pass them here -->
+  <input ng-click='logIn(user)' type='submit'>
+</form>
+</div>
+
+<!-- TODO: ui-router refactor -->
+<a href="/#/signup">Sign Up</a>
