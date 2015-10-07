@@ -1,7 +1,9 @@
 angular.module('kwiki', [
-  'kwiki.load',
+  'kwiki.finder',
   'kwiki.auth',
   'kwiki.chat',
+  'services.socket',
+  'services.user',
   'ui-router'
 ])
 
@@ -12,8 +14,10 @@ angular.module('kwiki', [
     return {
       check: function ($location, Users) {
         if(!!Users.isAuth()){
+          // TODO ui-router refactor
           $location.path(success);
         } else {
+          // TODO ui-router refactor
           $location.path(failure);
         }
       }
