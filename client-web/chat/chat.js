@@ -46,7 +46,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
   };
 
   $scope.logOut = function () {
-    Users.logOut();
+    User.logOut();
   };
 
 }]);
