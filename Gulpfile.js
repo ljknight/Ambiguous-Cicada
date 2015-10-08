@@ -9,12 +9,7 @@ var karma = require('karma');
 var clientDepPaths = [
   'node_modules/angular/angular.js',
   'node_modules/angular-ui-router/build/angular-ui-router.js',
-  'node_modules/socket.io-client/socket.io.js'
-];
-
-var clientMinDepPaths = [
-  'node_modules/angular/angular.min.js',
-  'node_modules/angular-ui-router/build/angular-ui-router.min.js',
+  'node_modules/spin/dist/spin.js',
   'node_modules/socket.io-client/socket.io.js'
 ];
 
@@ -28,14 +23,13 @@ gulp.task('karma', function(done) {
 gulp.task('build-dev', function() {
   return gulp.src( clientDepPaths.concat( 'client-web/app.js', 'client-web/!(build|tests)/*.js' ) , {base: '.'} )
     .pipe(sourcemaps.init())
-
     .pipe(concat('build.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('client-web/build/'));
 });
 
 gulp.task('build', function() {
-  return gulp.src( clientMinDepPaths.concat( 'client-web/app.js', 'client-web/!(build|tests)/*.js' ) , {base: '.'} )
+  return gulp.src( clientDepPaths.concat( 'client-web/app.js', 'client-web/!(build|tests)/*.js' ) , {base: '.'} )
     .pipe(sourcemaps.init())
     .pipe(cache('build'))
     .pipe(uglify())
