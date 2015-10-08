@@ -75,7 +75,6 @@ router.get('/:chatroom/messages', function(req, res) {
   })
 });
 
-
 //************* Authentication Routes **************
 router.post('/signup', function(req, res) {
   auth.signup(req.body.username, req.body.password)

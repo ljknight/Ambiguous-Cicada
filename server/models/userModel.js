@@ -53,4 +53,4 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-module.exports = db.model('users', UserSchema);
+module.exports.User = db.model('users', UserSchema);

@@ -1,52 +1,33 @@
-var User = require('./userModel');
-var Auth = {};
+var User = require('./userModel').User;
 
 // signup function that validates, creates new user and returns a promise
-Auth.signup = function(username, password) {
-  return new Promise(function(resolve, reject) {
-    User.findOne({username: username}, function(err, user) {
-      if (user) {
-        reject(new Error('User already exist!'));
-      } else {
-        newUser = {
-          username: username,
-          password: password
-        };
-        User.create(newUser, function(err, user) {
-          if (err) reject(err);
-          else resolve(user.id);
-        });
-      }
-    });
+module.exports.signup = function(username, password) {
+  return User
+  .findOne({username: username})
+  .then(function(user){
+    if (!user){
+      return User.create({username: username, password: password}) 
+    }
+    return new Error('user already exists')
+  })
+  .then(function(user){
+    console.log('created user: ',user)
+  })
+  .catch(function(err){
+    console.log(err)
   });
 };
 
 // login function that validates, authenticates and returns a promise
-Auth.login = function(username, password) {
-  return new Promise(function(resolve, reject) {
-    User.findOne({username: username}, function(err, user) {
-      if(err){
-        throw new Error(err);
-      }
-
-      if (!user) {
-        reject('User does not exist');
-      } else {
-        return user.comparePasswords(password)
-          .then(function (foundUser) {
-            if (foundUser) {
-              resolve({
-                id: user._id,
-                name: user.username
-              });
-            } else {
-              reject(new Error('User not found!'));
-            }
-          });
-      }
-      });
-
-    });
-};
-
-module.exports = Auth;
+module.exports.login = function(username, password) {
+  return User
+  .findOne({username: username})
+  .then(function(user){
+    if (!user) {
+      return new Error('User does not exist');
+    }
+    return user.comparePasswords(password)
+  }).then(function(foundUser){
+    return foundUser
+  })
+}

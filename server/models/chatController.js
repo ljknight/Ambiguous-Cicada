@@ -1,35 +1,22 @@
-var Chatroom = require('./chatModel.js').Chatroom;
-var Message = require('./chatModel.js').Message;
-var User = require('./userModel').user
+var Chatroom = require('./chatModel').Chatroom;
+var Message = require('./chatModel').Message;
+var User = require('./userModel').User;
 
 module.exports.addChatroom = function(chatroomId) {
   return Chatroom
   .create({name: chatroomId, users: [], messages: []}) 
-  .then(function(data){console.log('created Chatroom ',data)
-  })
-  .catch(function(err) {
-    console.log('could not create Chatroom',err)
-  });
 };
 
-module.exports.addUserToChatroom = function(chatroomId,username) {
+module.exports.addUserToChatroom = function(chatroom,username) {
   return User
   .findOne({username:username})
   .then(function(user){
-    return Chatroom.findOne({chatroomId:chatroomId})
-    .then(function(chatroom){
-      // if (!chatroom.indexOf('username'){
-        chatroom.users.push(user)
-        return chatroom.save()
-      // } else {
-      //   return new Error('user already exists in chatroom')
-      // }
-    })  
-    .catch(function(err){
-      console.error(err);
-      res.sendStatus(500);
-    })
-  });
+    chatroom.users.push(user)
+    return chatroom.save()
+  })  
+  .catch(function(err){
+    console.error(err);
+  })
 };
 
 module.exports.getUsersFromChatroom = function(chatroomId) {
@@ -41,6 +28,8 @@ module.exports.getUsersFromChatroom = function(chatroomId) {
 };
 
 module.exports.addMessage = function (chatroomId, message) {
+  console.log('message ',message)
+  console.log('chatroomId ',chatroomId)
   return Message
   .create(message)
   .then(function(msg) {
@@ -52,7 +41,6 @@ module.exports.addMessage = function (chatroomId, message) {
   })
   .catch(function(err){
     console.error(err);
-    res.sendStatus(500);
   })
 };
 
