@@ -27,17 +27,11 @@ module.exports.getUsersFromChatroom = function(chatroomId) {
   })
 };
 
-module.exports.addMessage = function (chatroomId, message) {
-  console.log('message ',message)
-  console.log('chatroomId ',chatroomId)
-  return Message
-  .create(message)
-  .then(function(msg) {
-    return Chatroom.findOne({name: chatroomId})
-  })
+module.exports.addMessage = function (chatroomId, message,username) {
+  return Chatroom.findOne({name: chatroomId})
   .then(function (chatroom) {
-    chatroom.messages.push(message)
-    return chatroom.save()
+    chatroom.messages.push({username:username,text:message});
+    return chatroom.save();
   })
   .catch(function(err){
     console.error(err);

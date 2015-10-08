@@ -127,7 +127,7 @@ io.on('connection',function(socket){
       return chat.addUserToChatroom(chatroom,username)
     })
     .then(function(chatroom){
-      console.log('saved: ',chatroom)
+      // console.log('saved: ',chatroom)
     })
     //join chat room with the name of the address
     session.room = place;
@@ -149,11 +149,13 @@ io.on('connection',function(socket){
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-    chat.addMessage(session.place,msg)
-    .then(function(chatroom){
-      console.log('message saved: ',chatroom)
-    })
 
+    if (session.room === session.place){
+      chat.addMessage(session.place,msg,session.user.username)
+      .then(function(chatroom){
+        console.log('message saved: ',chatroom)
+      })      
+    }
     // console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'

@@ -12,12 +12,18 @@ var ChatroomSchema = new Schema({
   name: String,
   users: [{
     id: String,
-    name: String,
+    username: String,
   }],
   messages: [{
-    type: ObjectId,
-    ref: 'messages'
+    id: String,
+    username: String,
+    text: String,
+    timestamp: Date
   }]
+  // messages: [{
+  //   type: ObjectId,
+  //   ref: 'messages'
+  // }]
 });
 
 module.exports.Message = db.model('messages', MessageSchema);
