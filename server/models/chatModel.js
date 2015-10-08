@@ -9,7 +9,7 @@ var MessageSchema = new Schema({
 });
 
 var ChatroomSchema = new Schema({
-  name: String,
+  place: String,
   users: [{
     id: String,
     username: String,

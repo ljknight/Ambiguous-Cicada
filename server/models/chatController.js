@@ -2,9 +2,16 @@ var Chatroom = require('./chatModel').Chatroom;
 var Message = require('./chatModel').Message;
 var User = require('./userModel').User;
 
-module.exports.addChatroom = function(chatroomId) {
+module.exports.addChatroom = function(place) {
   return Chatroom
-  .create({name: chatroomId, users: [], messages: []}) 
+  .findOne({place:place})
+  .then(function(chatroom){
+    if (chatroom){
+      console.log('chatroom already exists')
+      return;
+    }
+    return Chatroom.create({place: place, users: [], messages: []}) 
+  })
 };
 
 module.exports.addUserToChatroom = function(chatroom,username) {
@@ -19,28 +26,35 @@ module.exports.addUserToChatroom = function(chatroom,username) {
   })
 };
 
-module.exports.getUsersFromChatroom = function(chatroomId) {
+module.exports.getUsersFromChatroom = function(place) {
   return Chatroom
-  .findOne({name:chatroomId})
+  .findOne({place:place})
   .then(function(chatroom){
-    return chatroom.users
+    if (chatroom){
+      return chatroom.users;
+    }
+    throw new Error("could not find room");
   })
 };
 
-module.exports.addMessage = function (chatroomId, message,username) {
-  return Chatroom.findOne({name: chatroomId})
+module.exports.addMessage = function (place, message,username) {
+  return Chatroom.findOne({place: place})
   .then(function (chatroom) {
-    chatroom.messages.push({username:username,text:message});
-    return chatroom.save();
+    if (chatroom){
+      console.log("found chatroom",chatroom)
+      chatroom.messages.push({username:username,text:message,date:new Date()});
+      return chatroom.save();      
+    }
+    throw new Error("could not find room")
   })
   .catch(function(err){
     console.error(err);
   })
 };
 
-module.exports.getMessages = function (chatroomId) {
+module.exports.getMessages = function (place) {
   return Chatroom
-  .findOne({name: chatroomId})
+  .findOne({place: place})
   .then(function(chatroom){
     return chatroom.messages
   })

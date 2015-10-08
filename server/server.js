@@ -4,6 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var chat = require('./models/chatController')
+
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js')
 
@@ -87,11 +89,14 @@ router.get('/:chatroom/messages', function(req, res) {
 //store all users that want to find a kwiky
 io.on('connection',function(socket){
   var session  = socket.request.session
-  var address,username;
-  //connect user to address if exists on the session
+  var place,username;
+  //connect user to place if exists on the session
+  console.log('socket connected:',session)
+
   if (session.user){
-    if (session.user.address){
-      // socket.join(session.user.address.toString());
+    if (session.place){
+      socket.emit('populateChat',chat.getMessages())
+      socket.join(session.place.toString());
     }
   }
 
@@ -125,6 +130,12 @@ io.on('connection',function(socket){
     })
     .then(function(chatroom){
       // console.log('saved: ',chatroom)
+      return chat
+      .getMessages(session.user.place)
+      .then(function(messages){
+        console.log('messages',messages)
+        socket.emit('populateChat',messages)
+      })
     })
     //join chat room with the name of the address
     session.room = place;
@@ -146,7 +157,6 @@ io.on('connection',function(socket){
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-
     if (session.room === session.place){
       chat.addMessage(session.place,msg,session.user.username)
       .then(function(chatroom){
