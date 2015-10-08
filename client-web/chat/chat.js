@@ -36,6 +36,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     }, 30 * Math.pow(10, 3));
 
     $scope.sendMessage = function() {
+      console.log('current User: ',User.current())
       if ($scope.messageInput) {
         Socket.emit('sendMessage', $scope.messageInput);
         $scope.chatMessages.unshift({

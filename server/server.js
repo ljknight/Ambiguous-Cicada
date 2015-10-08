@@ -91,11 +91,14 @@ io.on('connection',function(socket){
   var session  = socket.request.session
   var place,username;
   //connect user to place if exists on the session
-  console.log('socket connected:',session)
+  console.log('socket connected \n place: ',session.place,"\n user: ",session.user)
 
   if (session.user){
     if (session.place){
-      socket.emit('populateChat',chat.getMessages())
+      chat.getMessages(session.place)
+      .then(function(messages){
+        socket.emit('populateChat',messages);
+      })
       socket.join(session.place.toString());
     }
   }
@@ -119,10 +122,12 @@ io.on('connection',function(socket){
   });
 
   socket.on('joinPlace', function(data){
-    username = session.user.name;
     //save new place to session
+    console.log(session.user,' joined a room \n place: ',session.place)
+    console.log(session)
     session.place = data.place;
     session.save();
+    // console.log('place',session.place)
     //**** create new chatroom *****
     chat.addChatroom(session.place)
     .then(function(chatroom){
@@ -131,7 +136,7 @@ io.on('connection',function(socket){
     .then(function(chatroom){
       // console.log('saved: ',chatroom)
       return chat
-      .getMessages(session.user.place)
+      .getMessages(session.place)
       .then(function(messages){
         console.log('messages',messages)
         socket.emit('populateChat',messages)
@@ -141,7 +146,7 @@ io.on('connection',function(socket){
     session.room = place;
     socket.join(session.place.toString());
 
-    console.log(username,' joined room ', session.place);
+    console.log(session.user.username,' joined room ', session.place);
   });
 
   socket.on('rejoinPlace', function() {
@@ -157,15 +162,17 @@ io.on('connection',function(socket){
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-    if (session.room === session.place){
+    // console.log('sended message: ',msg)
+    // if (session.room === session.place){
+      console.log('sessions user: ',session.user)
       chat.addMessage(session.place,msg,session.user.username)
       .then(function(chatroom){
         console.log('message saved: ',chatroom)
       })      
-    }
+    // }
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(session.room).emit('chatMessage', msg);
+    socket.broadcast.to(session.place).emit('chatMessage', msg);
   });
 
   //completely disconnect
