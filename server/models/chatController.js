@@ -45,7 +45,7 @@ module.exports.addMessage = function (place, message,username) {
       chatroom.messages.push({username:username,text:message,date:new Date()});
       return chatroom.save();      
     }
-    throw new Error("could not find room")
+    throw new Error("could not find chatroom")
   })
   .catch(function(err){
     console.error(err);
@@ -56,7 +56,10 @@ module.exports.getMessages = function (place) {
   return Chatroom
   .findOne({place: place})
   .then(function(chatroom){
-    return chatroom.messages
+    if (chatroom){
+      return chatroom.messages
+    }
+    throw new Error("could not find chatroom")
   })
   // .populate("messages")
   // .exec();
