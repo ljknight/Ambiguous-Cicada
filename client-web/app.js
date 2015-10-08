@@ -17,40 +17,85 @@ angular.module('kwiki', [
 
   $stateProvider
     .state('login', {
-      templateUrl: 'auth/login.html',
-      controller: 'AuthController',
+
+      views: {
+
+          page: {
+            templateUrl: 'auth/login.html',
+            controller: 'AuthController',
+          }
+        },
+
       url: '/login',
       data: {
         requireLogin: false
       }
     })
     .state('signup', {
-      templateUrl: 'auth/signup.html',
-      controller: 'AuthController',
+
+      views: {
+
+          page: {
+            templateUrl: 'auth/signup.html',
+            controller: 'AuthController',
+          }
+        },
+      
       url: '/signup',
       data: {
         requireLogin: false
       }
     })
     .state('finder', {
-      templateUrl: 'finder/finder.html',
-      controller: 'FinderController',
+
+      views: {
+          
+          nav: {
+            templateUrl: './nav/nav.html',
+            controller: 'AuthController'
+          },
+
+          page: {
+            templateUrl: 'finder/finder.html',
+            controller: 'FinderController',
+          }
+        },
+
       url: '/finder',
       data: {
         requireLogin: true
       }
     })
     .state('chat', {
-      templateUrl: 'chat/chat.html',
-      controller: 'ChatController',
+
+      views: {
+          
+          nav: {
+            templateUrl: './nav/nav.html',
+            controller: 'AuthController'
+          },
+
+          page: {
+            templateUrl: 'chat/chat.html',
+            controller: 'ChatController',
+          }
+        },
+
       url: '/chat',
       data: {
         requireLogin: true
       }
     })
     .state('oauth', {
-      templateUrl: 'oauth/oauth.html',
-      controller: 'OAuthController',
+
+      views: {
+
+          page: {
+            templateUrl: 'oauth/oauth.html',
+            controller: 'OAuthController',
+          }
+        },
+    
       url: '/oauth',
       data: {
         requireLogin: false
