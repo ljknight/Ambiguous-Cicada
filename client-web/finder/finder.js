@@ -44,6 +44,11 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         // Geolocation reference: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
+
+            console.log('found position:', position);
+
+            Socket.emit('setPosition', {lat: position.coords.latitude, lng: position.coords.longitude});
+
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
