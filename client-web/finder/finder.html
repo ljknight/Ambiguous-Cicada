@@ -5,4 +5,6 @@
   <div ng-model="directionsModel" id="directions"></div>
   <button ng-click='submit()'>Find me a kwiki!</button>
   <button ng-click='lucky()'>I'm feeling lucky!</button>
+  <p>Search for a match within {{radius}} miles</p>
+  <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
 </div>

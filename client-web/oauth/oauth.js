@@ -5,7 +5,7 @@ angular.module('kwiki.oauth', [])
       url: '/auth/google/token'
     }).then(function(res) {
       console.log('OAuth token received: ', res.data);
-      $window.localStorage.setItem('com.kwiki', res.data);
+      $window.localStorage.setItem('com.kwiki', JSON.stringify(res.data));
       User.current(res.data.name);
       $state.transitionTo('finder');
     });
