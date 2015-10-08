@@ -1,8 +1,12 @@
 <div>
-  <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
   <div id="map"></div>
   <div class="spinner"></div>
+  <div class="input-container">
+    <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
+  </div>
+  <div class="button-container">
+    <button class="map-button"ng-click='submit()'>Find me a kwiki!</button>
+    <button class="map-button lucky" ng-click='lucky()'>I'm feeling lucky!</button>
+  </div>
   <div ng-model="directionsModel" id="directions"></div>
-  <button ng-click='submit()'>Find me a kwiki!</button>
-  <button ng-click='lucky()'>I'm feeling lucky!</button>
 </div>
