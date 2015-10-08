@@ -21,7 +21,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       User.logOut();
     };
 
-    // Reference: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
+    // Google Map & Places reference: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
     $window.initMap = function() {
       $scope.map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -44,7 +44,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       });
 
       marker.addListener('click', function() {
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>');
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address + '</div>');
         infowindow.open($scope.map, marker);
       });
 
@@ -75,11 +75,34 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         });
         //Show marker
         marker.setVisible(true);
-
-        //Set text displayed in infowindow
-          // $scope.place.formatted_address + '<br>' + '" />' );
-        // infowindow.open($scope.map, marker);
       });
+
+      // Geolocation reference: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infowindow.setPosition(pos);
+          infowindow.setContent('Location found.');
+          console.log(pos)
+          $scope.map.setCenter(pos);
+        }, function() {
+          handleLocationError(true, infowindow, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infowindow, map.getCenter());
+      }
+
+      function handleLocationError(browserHasGeolocation, infowindow, pos) {
+        infowindow.setPosition(pos);
+        infowindow.setContent(browserHasGeolocation ?
+          'Error: The Geolocation service failed.' :
+          'Error: Your browser doesn\'t support geolocation.');
+      }
     };
   }
 ]);
