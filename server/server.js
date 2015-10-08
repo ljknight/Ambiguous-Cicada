@@ -89,10 +89,7 @@ router.get('/:chatroom/messages', function(req, res) {
 //listen for connection event for incoming sockets
 //store all users that want to find a kwiky
 io.on('connection',function(socket){
-  var session = socket.request.session;
-
-  console.log('connection', session);
-
+  var session  = socket.request.session
   var address,username;
   //connect user to address if exists on the session
   if (session.user){
@@ -132,7 +129,6 @@ io.on('connection',function(socket){
     .then(function(chatroom){
       console.log('saved: ',chatroom)
     })
-
     //join chat room with the name of the address
     session.room = place;
     socket.join(session.place.toString());
