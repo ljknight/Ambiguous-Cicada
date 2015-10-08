@@ -1,5 +1,4 @@
-var User = require('../userModel');
-
+var User = require('./userModel');
 var Auth = {};
 
 // signup function that validates, creates new user and returns a promise

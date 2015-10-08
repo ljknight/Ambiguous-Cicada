@@ -40,7 +40,7 @@ router.get('/auth/google/token', function(req, res) {
 
 //***************** Chat routes ****************
 //create new chatroom
-router.post('/:chatroom',function(req,res){
+router.post('/:chatroom/chatroom',function(req,res){
   var chatroomId = req.params.chatroom;
   chat.addChatroom(chatroomId);
 });
