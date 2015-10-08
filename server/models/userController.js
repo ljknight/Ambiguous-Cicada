@@ -8,14 +8,8 @@ module.exports.signup = function(username, password) {
     if (!user){
       return User.create({username: username, password: password}) 
     }
-    return new Error('user already exists')
+    throw new Error('user already exists')
   })
-  .then(function(user){
-    console.log('created user: ',user)
-  })
-  .catch(function(err){
-    console.log(err)
-  });
 };
 
 // login function that validates, authenticates and returns a promise
@@ -24,10 +18,14 @@ module.exports.login = function(username, password) {
   .findOne({username: username})
   .then(function(user){
     if (!user) {
-      return new Error('User does not exist');
+      throw new Error('User does not exist');
     }
     return user.comparePasswords(password)
-  }).then(function(foundUser){
-    return foundUser
+    .then(function(foundUser){
+      if (foundUser){
+        return user
+      }
+      throw new Error('Wrong password');
+    })
   })
-}
+};

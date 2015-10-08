@@ -83,6 +83,7 @@ router.post('/signup', function(req, res) {
     .send(JSON.stringify(result));
   })
   .catch(function(err) {
+    console.log(err)
     res.status(300)
     .send(err);
   });
@@ -97,6 +98,7 @@ router.post('/login', function(req, res) {
     });
   })
   .catch(function(err) {
+    console.log(err)
     res.status(300)
     .send(err);
   });
