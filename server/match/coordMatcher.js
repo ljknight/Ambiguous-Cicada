@@ -2,8 +2,8 @@ var coordMatcher = function(maxDist) {
   this.maxDist = maxDist;
 };
 
-coordMatcher.prototype.isMatch = function(userA, userB) {
-  return this._getDistance(userA.coords, userB.coords) < this.maxDist;
+coordMatcher.prototype.isMatch = function(coordsA, coordsB) {
+  return this._getDistance(coordsA, coordsB) < this.maxDist;
 };
 
 coordMatcher.prototype._getDistance = function(coordsA, coordsB) {

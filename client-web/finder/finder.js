@@ -4,20 +4,23 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
   function($scope, $state, $window, Socket, User, Spinner) {
     $scope.disableButton = false;
 
-    $scope.address = '';
+    $scope.place = '';
 
     $scope.submit = function() {
       // TODO: button gets stuck disabled
       $scope.disableButton = true;
       Socket.emit('joinRoom', {
         username: User.current(),
-        address: $scope.address
+        place: $scope.place
       });
       $state.transitionTo('chat');
     };
 
     $scope.lucky = function() {
       Socket.emit('feelingLucky');
+      Socket.on('found', function() {
+        $state.transitionTo('chat');
+      });
       $state.transitionTo('waiting');
     };
 
@@ -116,7 +119,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           //Invoke getPlace method and returns PlaceResult
           place = autocomplete.getPlace();
           //Store place_id
-          $scope.address = place.place_id;
+          $scope.place = place.place_id;
           // Call calcRoute once a place has been selected
           calcRoute();
           //If place has no location, return out of function

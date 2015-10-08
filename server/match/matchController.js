@@ -1,43 +1,64 @@
+var EventEmitter = require('events');
+var _ = require('underscore');
+
 var CoordMatcher = require('./coordMatcher');
-var Backbone = require('backbone');
 
 var maxDist = 5;
 var matcher = new CoordMatcher(maxDist);
 
-// User model will intake {socket: socket, data: socket.request.session.user}
-var User = Backbone.Model.extend({});
+var pool = new EventEmitter();
+pool.storage = [];
 
-var luckyUsers = new Backbone.Collection({ model: User });
+pool.add = function(socket) {
+  var item = {
+    socket: socket,
+    coords: socket.request.session.coords
+  };
+  this.emit('add', item);
+};
 
-// Every time a user is added to the collection of users seeking matches,
-// we check all the waiting users to see if they're within the max distance
-luckyUsers.on('add', function(userOne) {
-  this.each(function(userTwo) {
-    if (matcher.isMatch(userOne.data.coords, userTwo.data.coords)) {
-      // If we have a match, the newer user joins the default room
-      // of the waiting user. Both sockets receive a 'found' event to
-      // navigate the clients to the chat view.
-      var newRoom = userOne.socket.id + userTwo.socket.id;
-      // Join the new room and record its ID on the socket to leave it later.
-      userOne.socket.join(newRoom);
-      userOne.socket.session.luckyRoom = newRoom;
+pool.on('add', function(item) {
+  var matched = false;
 
-      userTwo.socket.join(newRoom);
-      userTwo.socket.session.luckyRoom = newRoom;
+  _.each(this.storage, function(waiter) {
 
-      userOne.socket.emit('found');
-      userTwo.socket.emit('found');
-      // Remove the models from the waiting pool
-      this.remove([userOne, userTwo]);
+    if (matcher.isMatch(item.coords, waiter.coords)) {
+      console.log('found match: ', item.socket.request.session.user.name, waiter.socket.request.session.user.name);
+
+      matched = true;
+      var newRoom = item.socket.id + waiter.socket.id;
+
+      item.socket.join(newRoom);
+      item.socket.request.session.room = newRoom;
+      item.socket.emit('found');
+
+      waiter.socket.join(newRoom);
+      waiter.socket.request.session.room = newRoom;
+      waiter.socket.emit('found');
+
+      this.remove(waiter.socket);
+
     }
-  });
+
+  }.bind(this));
+
+  if (!matched) {
+    this.storage.push(item);
+  }
 });
+
+pool.remove = function(socket) {
+  var index = _.findIndex(this.storage, function(item) {
+    return item.socket === socket;
+  });
+  this.storage.splice(index, 1);
+};
 
 module.exports = {
   findOrAwaitMatch: function(socket) {
-    luckyUsers.add({socket: socket, data: socket.request.session.user});
+    pool.add(socket);
   },
   cancelMatch: function(socket) {
-    luckyUsers.remove(luckyUsers.where({socket: socket}));
+    pool.remove(socket);
   }
 };
