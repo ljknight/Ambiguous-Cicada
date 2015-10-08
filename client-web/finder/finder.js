@@ -62,7 +62,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
 
             infowindow.setPosition(pos);
             infowindow.setContent('Location found.');
-            console.log('user position: ', pos)
             $scope.map.setCenter(pos);
           }, function() {
             handleLocationError(true, infowindow, map.getCenter());
@@ -104,6 +103,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           place = autocomplete.getPlace();
           //Store place_id
           $scope.address = place.place_id;
+          // Call calcRoute once a place has been selected
           calcRoute();
           //If place has no location, return out of function
           if (!place.geometry) {
@@ -140,7 +140,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       var calcRoute = function() {
         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
-        console.log(end)
         var request = {
           origin: start,
           destination: end,
