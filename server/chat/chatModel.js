@@ -3,7 +3,7 @@ var Schema = db.Schema,
     ObjectId = Schema.ObjectId;
 
 var MessageSchema = new Schema({
-  userName: String,
+  username: String,
   text: String,
   timestamp: Date
 });

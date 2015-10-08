@@ -2,6 +2,7 @@ var router = require('express').Router();
 
 var auth = require('./auth/auth');
 var utils = require('./lib/utils');
+var chat = require('./chat/chatController.js');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -37,6 +38,45 @@ router.get('/auth/google/token', function(req, res) {
   res.json(req.session.user);
 });
 
+//***************** Chat routes ****************
+//create new chatroom
+router.post('/:chatroom',function(req,res){
+  var chatroomId = req.params.chatroom;
+  chat.
+});
+//add users to chatroom
+router.post('/:chatroom/users',function(req,res){
+  var username = req.body.username;
+  var chatroomId = req.params.chatroom;
+  chat.
+});
+//get users from chatroom
+router.get('/:chatroom/users',function(req,res){
+  var chatroomId = req.params.chatroom;
+  chat.
+});
+
+//create a new message in a chatroom
+router.post('/:chatroom/messages', function(req, res) {
+  var chatroomId = req.params.chatroom;
+  message = {
+    username:req.body.username,
+    text:req.body.text
+  }
+  chat.addMesage(chatroomId,message)
+});
+//get messages from a chatRoom
+router.get('/:chatroom/messages', function(req, res) {
+  var chatroomId = req.params.chatroom;
+  chat.getMessages(chatroomId)
+  .then(function(data){
+    console.log('got some data back: ',data)
+    res.json(data);
+  })
+});
+
+
+//************* Authentication Routes **************
 router.post('/signup', function(req, res) {
   auth.signup(req.body.username, req.body.password)
   .then(function(result) {
