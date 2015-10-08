@@ -23,6 +23,7 @@
   "dependencies": {
     "angular": "~1.4.6",
     "angular-ui-router": "^0.2.15",
+    "backbone": "^1.2.3",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.14.0",
     "connect-mongo": "~0.8.2",

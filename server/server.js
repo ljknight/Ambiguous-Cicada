@@ -10,6 +10,7 @@ var secret = require('./secret.js');
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js');
 var User = require('./auth/userModel');
+var matchController = require('./match/matchController');
 
 var port = require('./config.js').port;
 
@@ -41,7 +42,7 @@ var router = require('./routes.js');
 
 //mount middleware to io request, now we have access to socket.request.session
 io.use(function(socket,next){
-  sessionHandler(socket.request,socket.request.res,next)
+  sessionHandler(socket.request, socket.request.res, next)
 });
 
 //***************** Sockets *******************
@@ -66,6 +67,16 @@ io.on('connection',function(socket){
     session.save();
   });
 
+  socket.on('feelingLucky', function() {
+    // Leave the restored chat if it was joined
+    socket.leave(session.user.address.toString());
+    matchController.findOrAwaitMatch(socket);
+  });
+
+  socket.on('leaveLuckyRoom', function() {
+    socket.leave(session.luckyRoom);
+  });
+
   socket.on('joinRoom', function(data){
     username = session.user.name;
     //save new address to session
@@ -81,11 +92,10 @@ io.on('connection',function(socket){
   });
 
   socket.on('leaveRoom', function(){
-    socket.leaveRoom(socket.chatRoom);
+    socket.leave(socket.chatRoom);
     console.log(username,' left the room ',address);
     //remove address property on session
     delete session.user.address;
-
   });
 
   //if client socket emits send message
