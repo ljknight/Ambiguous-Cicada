@@ -35,6 +35,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           },
           zoom: 13
         }
+        // Async
         createMap();
       } else {
 
@@ -53,7 +54,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
               },
               zoom: 13
             }
-
+            // Async
             createMap();
 
             infowindow.setPosition(pos);
@@ -84,7 +85,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         });
 
         marker.addListener('click', function() {
-          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address + '</div>');
+          // console.log('hi!');
           infowindow.open($scope.map, marker);
         });
 
@@ -119,7 +120,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           // Set text displayed in infowindow
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
             place.formatted_address);
-          infowindow.open(map, marker);
+          infowindow.open($scope.map, marker);
         });
       }
 
