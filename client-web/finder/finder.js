@@ -1,7 +1,7 @@
 angular.module('kwiki.finder', ['services.socket', 'services.user'])
 
-.controller('FinderController', ['$scope', '$state', '$rootScope','$window', 'Socket', 'User',
-  function($scope, $state, $window, $rootScope, Socket, User) {
+.controller('FinderController', ['$scope', '$state','$window', 'Socket', 'User',
+  function($scope, $state, $window, Socket, User) {
     $scope.disableButton = false;
 
     $scope.address = '';
