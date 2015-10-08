@@ -3,12 +3,6 @@ h4, form {
   text-align: center;
 }
 
-/* Google map must have height & width to render */
-#map {
- height: 420px;
- width: 600px;
-}
-
 #place-input {
  background-color: #fff;
  font-family: Roboto;
@@ -18,4 +12,19 @@ h4, form {
  padding: 0 11px 0 13px;
  text-overflow: ellipsis;
  width: 300px;
+}
+
+/* Google map must have height & width to render */
+#map {
+ float: left;
+ height: 420px;
+ margin-right: 50px;
+ width: 600px;
+}
+
+#directions {
+  float: left;
+  font-size: 14px;
+  height: 200px;
+  width: 400px;
 }
