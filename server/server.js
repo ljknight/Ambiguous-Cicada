@@ -156,7 +156,6 @@ io.on('connection',function(socket){
         console.log('message saved: ',chatroom)
       })      
     }
-    // console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
     socket.broadcast.to(session.room).emit('chatMessage', msg);
