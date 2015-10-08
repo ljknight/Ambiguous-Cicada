@@ -54,11 +54,19 @@ button {
 
 .nav li {
   float: left;
-  margin-right: 20px;
+  font-size: 18px;
+  margin-right: 25px;
 }
 
 .nav li:last-child {
   margin-right: 0;
+}
+
+.nav a {
+  background-color: #FFC900;
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px 30px;
 }
 
 .logo {
@@ -119,4 +127,5 @@ button {
   margin-left: 38px;
 }
 
-/*blue 00BBEE*/
+/*blue #00BBEE*/
+/*yellow #FFC900*/
