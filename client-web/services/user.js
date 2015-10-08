@@ -28,7 +28,7 @@ angular.module('services.user', [])
       data: userObject
     }).then(function(res) {
       console.log(res);
-      $window.localStorage.setItem('com.kwiki', res.data);
+      $window.localStorage.setItem('com.kwiki', JSON.stringify(res.data));
       current(res.data.name);
     });
 

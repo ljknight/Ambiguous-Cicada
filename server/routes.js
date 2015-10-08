@@ -41,7 +41,7 @@ router.post('/signup', function(req, res) {
   auth.signup(req.body.username, req.body.password)
   .then(function(result) {
     res.status(201)
-    .send(result);
+    .send(JSON.stringify(result));
   })
   .catch(function(err) {
     res.status(300)
@@ -54,7 +54,7 @@ router.post('/login', function(req, res) {
   .then(function(user) {
     req.user = user;
     utils.createSession(req, res, function() {
-      res.status(200).send(req.session.user);
+      res.json(req.session.user);
     });
   })
   .catch(function(err) {
