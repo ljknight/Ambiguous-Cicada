@@ -115,6 +115,11 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           });
           //Show marker
           marker.setVisible(true);
+
+          // Set text displayed in infowindow
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address);
+          infowindow.open(map, marker);
         });
       }
 
