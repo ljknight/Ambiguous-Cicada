@@ -1,8 +1,8 @@
 var router = require('express').Router();
 
-var auth = require('./auth/auth');
+var auth = require('./models/userController');
 var utils = require('./lib/utils');
-var chat = require('./chat/chatController.js');
+var chat = require('./models/chatController');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -42,18 +42,18 @@ router.get('/auth/google/token', function(req, res) {
 //create new chatroom
 router.post('/:chatroom',function(req,res){
   var chatroomId = req.params.chatroom;
-  chat.
+  chat.addChatroom(chatroomId);
 });
 //add users to chatroom
 router.post('/:chatroom/users',function(req,res){
   var username = req.body.username;
   var chatroomId = req.params.chatroom;
-  chat.
+  chat.addMesage({username:username,name:chatroomId})
 });
 //get users from chatroom
 router.get('/:chatroom/users',function(req,res){
   var chatroomId = req.params.chatroom;
-  chat.
+  chat.getUsersFromChatroom(chatroomId);
 });
 
 //create a new message in a chatroom

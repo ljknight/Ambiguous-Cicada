@@ -1,4 +1,4 @@
-var User = require('../models/userModel');
+var User = require('../userModel');
 
 var Auth = {};
 

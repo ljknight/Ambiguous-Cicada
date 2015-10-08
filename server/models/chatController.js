@@ -1,92 +1,73 @@
 var Chatroom = require('./chatModel.js').Chatroom;
 var Message = require('./chatModel.js').Message;
-
+var User = require('./userModel').user
 
 module.exports.addChatroom = function(chatroomId) {
-  Chatroom.create({
+  return Chatroom
+  .create({
+    name: chatroomId,
     users: [],
     messages: []
-  }, function(err, chatroom) {
-    if(err){
-      console.log('could not create Chatroom',err)
-    } else {
-
-    }
-    
+  })
+  .then(function(data){
+    console.log('created Chatroom ',data)
+  })
+  .catch(function(err) {
+    console.log('could not create Chatroom',err)
   });
 };
 
-module.exports.addUserToChatroom = function(users) {
-  users.forEach(function(user) {
-    user.join(chatroom._id);
-  });
-  usersDbObj = users.map(function(user) {
-    return {
-      id: user.id,
-      name: user.name
-    };
-  });
-
-  usersDbObj = users.map(function(user) {
-    return {
-      id: user.id,
-      name: user.name
-    };
-  });
-
-  Chatroom.create({
-    users: usersDbObj,
-    messages: []
-  }, function(err, chatroom) {
-    if(err){
-      throw new Error(err);
-    }
-    users.forEach(function(user) {
-      user.join(chatroom._id);
-    });
+module.exports.addUserToChatroom = function(chatroomId,username) {
+  return User
+  .findOne({username:username})
+  .then(function(user){
+    return Chatroom.findOne({chatroomId:chatroomId})
+    .then(function(chatroom){
+      // if (!chatroom.indexOf('username'){
+        chatroom.users.push({user})
+        return chatroom.save()
+      // } else {
+      //   return new Error('user already exists in chatroom')
+      // }
+    })  
+    .catch(function(err){
+      console.error(err);
+      res.sendStatus(500);
+    })
   });
 };
 
-module.exports.getUsersFromChatroom = function(users) {
-  usersDbObj = users.map(function(user) {
-    return {
-      id: user.id,
-      name: user.name
-    };
-  });
-
-  Chatroom.create({
-    users: usersDbObj,
-    messages: []
-  }, function(err, chatroom) {
-    if(err){
-      throw new Error(err);
-    }
-    users.forEach(function(user) {
-      user.join(chatroom._id);
-    });
-  });
+module.exports.getUsersFromChatroom = function(chatroomId) {
+  return Chatroom
+  .findOne({name:chatroomId})
+  .then(function(chatroom){
+    return chatroom.users
+  })
 };
 
 module.exports.addMessage = function (chatroomId, message) {
-  Message.create(message).then(function(msg) {
-    console.log('created msg: ',msg);
-    Chatroom.findOne({_id: chatroomId}, function (err, chatroom) {
-      if (err) {
-        console.error('chatroom not found: ',err);
-      }
-      var messages = chatroom.messages;
-      messages.push(msg._id);
-      Chatroom.findOneAndUpdate({ _id: chatroomId }, { messages: messages })
-      .exec();
-    });
-  });
+  return Message
+  .create(message)
+  .then(function(msg) {
+    return Chatroom.findOne({name: chatroomId})
+  })
+  .then(function (chatroom) {
+    chatroom.messages.push({message})
+    return chatroom.save()
+  })
+  .catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  })
 };
 
 module.exports.getMessages = function (chatroomId) {
   return Chatroom
-  .findOne({_id: chatroomId})
-  .populate("messages")
-  .exec();
+  .findOne({name: chatroomId})
+  .then(function(chatroom){
+    return chatroom.messages
+  })
+  // .populate("messages")
+  // .exec();
 };
 

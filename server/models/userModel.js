@@ -1,16 +1,16 @@
 var db = require('../db');
 var bcrypt = require('bcrypt-nodejs');
 
-var MessageSchema = new db.Schema({
-
-  body: {
-    
-  }
-
+var UserSchema = new db.Schema({
   username: {
     type: String,
     required: true,
     unique: true
+  },
+
+  password: {
+    type: String,
+    required: true
   }
 });
 
