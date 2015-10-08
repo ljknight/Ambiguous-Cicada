@@ -110,55 +110,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           map: $scope.map,
         });
 
-        // Grab POI coordinates - reference: http://jsfiddle.net/doktormolle/aSz2r/
-        var fx = google.maps.InfoWindow.prototype.setPosition;
-
-        google.maps.InfoWindow.prototype.setPosition = function() {
-          //this property isn't documented, but as it seems
-          //it's only defined for InfoWindows opened on POIs
-          if (this.logAsInternal) {
-            google.maps.event.addListenerOnce(this, 'map_changed', function() {
-              var map = this.getMap();
-              //the infoWindow will be opened, usually after a click on a POI
-              if (map) {
-                //trigger the click
-                google.maps.event.trigger(map, 'click', {
-                  latLng: this.getPosition()
-                });
-              }
-            });
-          }
-          //call the original setPosition-method
-          fx.apply(this, arguments);
-        };
-
-        google.maps.event.addListener($scope.map, 'click', function(event) {
-          // console.log('here', event.latLng);
-          var latlong = {lat: event.latLng.J, lng: event.latLng.M};
-          // make google places api request for place id 
-          var findPlaceId = new google.maps.places.PlacesService(map);
-          findPlaceId.nearbySearch({
-            location: latlong,
-            radius: 5000,
-          }, callback);
-
-          function callback(results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              // for (var i = 0; i < results.length; i++) {
-                console.log('here',results)
-                // createMarker(results[i]);
-              // }
-            }
-          }
-
-          // results[0].place_id
-
-          // reassign scope.address
-
-          // send this to the directions
-        });
-
-
         marker.addListener('click', function() {
           infowindow.open($scope.map, marker);
         });
