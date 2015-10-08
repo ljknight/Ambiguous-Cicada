@@ -9,7 +9,7 @@ angular.module('kwiki', [
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/finder');
 
   $stateProvider
     .state('login', {

@@ -44,3 +44,5 @@ server/secret.js
 node_modules/
 client-web/build/
 client-mobile/www/lib/
+
+googleoauth.js
