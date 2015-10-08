@@ -67,8 +67,8 @@ io.on('connection',function(socket){
     session.save();
   });
 
-  socket.on('feelingLucky', function() {
-    matchController.findOrAwaitMatch(socket);
+  socket.on('feelingLucky', function(data) {
+    matchController.findOrAwaitMatch(socket, data.radius);
   });
 
   socket.on('cancelLucky', function() {

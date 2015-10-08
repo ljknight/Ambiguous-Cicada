@@ -17,7 +17,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
     };
 
     $scope.lucky = function() {
-      Socket.emit('feelingLucky');
+      Socket.emit('feelingLucky', {radius: $scope.radius});
       Socket.on('found', function() {
         $state.transitionTo('chat');
       });

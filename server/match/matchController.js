@@ -1,28 +1,22 @@
-var EventEmitter = require('events');
 var _ = require('underscore');
 
-var CoordMatcher = require('./coordMatcher');
+var isMatch = require('./coordMatcher').isMatch;
 
-var maxDist = 5;
-var matcher = new CoordMatcher(maxDist);
-
-var pool = new EventEmitter();
+var pool = {};
 pool.storage = [];
 
-pool.add = function(socket) {
+pool.add = function(socket, radius) {
   var item = {
     socket: socket,
-    coords: socket.request.session.coords
+    coords: socket.request.session.coords,
+    radius: radius
   };
-  this.emit('add', item);
-};
 
-pool.on('add', function(item) {
   var matched = false;
 
   _.each(this.storage, function(waiter) {
 
-    if (matcher.isMatch(item.coords, waiter.coords)) {
+    if (isMatch(item, waiter)) {
       console.log('found match: ', item.socket.request.session.user.name, waiter.socket.request.session.user.name);
 
       matched = true;
@@ -45,7 +39,8 @@ pool.on('add', function(item) {
   if (!matched) {
     this.storage.push(item);
   }
-});
+
+};
 
 pool.remove = function(socket) {
   var index = _.findIndex(this.storage, function(item) {
@@ -55,8 +50,8 @@ pool.remove = function(socket) {
 };
 
 module.exports = {
-  findOrAwaitMatch: function(socket) {
-    pool.add(socket);
+  findOrAwaitMatch: function(socket, radius) {
+    pool.add(socket, radius);
   },
   cancelMatch: function(socket) {
     pool.remove(socket);
