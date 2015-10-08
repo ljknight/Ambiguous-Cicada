@@ -139,6 +139,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
       var calcRoute = function() {
         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
+        // End uses location object with lat(J), long(M) returned after user selects a place 
         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
 
         var request = {
@@ -152,6 +153,9 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           }
         });
       };
+    }
+    window.onload = function () { 
+      initMap();
     }
   }
 ]);
