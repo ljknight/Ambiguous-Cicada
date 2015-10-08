@@ -21,66 +21,115 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       User.logOut();
     };
 
-    // Reference: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
+    // Google Map & Places reference: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
     $window.initMap = function() {
-      $scope.map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-          lat: 37.783542,
-          lng: -122.408943
-        },
-        zoom: 13
-      });
 
-      var input = document.getElementById('place-input');
-
-      var autocomplete = new google.maps.places.Autocomplete(input);
-      // autocomplete.bindTo('bounds', map);
-
-      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+      var mapOptions;
       var infowindow = new google.maps.InfoWindow();
-      var marker = new google.maps.Marker({
-        map: $scope.map,
-      });
 
-      marker.addListener('click', function() {
-        // console.log('hi!');
-        infowindow.open($scope.map, marker);
-      });
-
-      autocomplete.addListener('place_changed', function() {
-        infowindow.close();
-        //Invoke getPlace method and returns PlaceResult
-        place = autocomplete.getPlace();
-        //Store place_id
-        $scope.address = place.place_id;
-        //If place has no location, return out of function
-        if (!place.geometry) {
-          return;
+      if (!navigator.geolocation) {
+        mapOptions = {
+          center: {
+            lat: 37.783542,
+            lng: 122.408943
+          },
+          zoom: 13
         }
+        // Async
+        createMap();
+      } else {
 
-        //If viewport exists, resize map bounds to viewport size
-        //Else center map based on place's latitude/longitude
-        if (place.geometry.viewport) {
-          $scope.map.fitBounds(place.geometry.viewport);
+        // Geolocation reference: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            mapOptions = {
+              center: {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              },
+              zoom: 13
+            }
+            // Async
+            createMap();
+
+            infowindow.setPosition(pos);
+            infowindow.setContent('Location found.');
+            console.log(pos)
+            $scope.map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infowindow, map.getCenter());
+          });
         } else {
-          $scope.map.setCenter(place.geometry.location);
-          $scope.map.setZoom(17);
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infowindow, map.getCenter());
         }
+      }
 
-        // Set the position of the marker using the place ID and location.
-        marker.setPlace({
-          placeId: place.place_id,
-          location: place.geometry.location
+      var createMap = function() {
+        $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        var input = document.getElementById('place-input');
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        // autocomplete.bindTo('bounds', map);
+
+        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var marker = new google.maps.Marker({
+          map: $scope.map,
         });
-        //Show marker
-        marker.setVisible(true);
 
-        // Set text displayed in infowindow
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-                place.formatted_address);
-        infowindow.open(map, marker);
-      });
+        marker.addListener('click', function() {
+          // console.log('hi!');
+          infowindow.open($scope.map, marker);
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+          //Invoke getPlace method and returns PlaceResult
+          place = autocomplete.getPlace();
+          //Store place_id
+          $scope.address = place.place_id;
+          //If place has no location, return out of function
+          if (!place.geometry) {
+            return;
+          }
+
+          //If viewport exists, resize map bounds to viewport size
+          //Else center map based on place's latitude/longitude
+          if (place.geometry.viewport) {
+            $scope.map.fitBounds(place.geometry.viewport);
+          } else {
+            $scope.map.setCenter(place.geometry.location);
+            $scope.map.setZoom(17);
+          }
+
+          // Set the position of the marker using the place ID and location.
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location
+          });
+          //Show marker
+          marker.setVisible(true);
+
+          // Set text displayed in infowindow
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address);
+          infowindow.open($scope.map, marker);
+        });
+      }
+
+      var handleLocationError = function(browserHasGeolocation, infowindow, pos) {
+        infowindow.setPosition(pos);
+        infowindow.setContent(browserHasGeolocation ?
+          'Error: The Geolocation service failed.' :
+          'Error: Your browser doesn\'t support geolocation.');
+      }
     };
   }
 ]);
