@@ -48,25 +48,33 @@ io.use(function(socket,next){
 //listen for connection event for incoming sockets
 //store all users that want to find a kwiky
 io.on('connection',function(socket){
-  // console.log('Socket '+ socket.id +' connected.');
-  console.log('connection',socket.request.session);
+  var session = socket.request.session;
+
+  console.log('connection', session);
+
   var address,username;
   //connect user to address if exists on the session
-  if (socket.request.session.user){
-    if (socket.request.session.user.address){
-      socket.join(socket.request.session.user.address.toString());
+  if (session.user){
+    if (session.user.address){
+      socket.join(session.user.address.toString());
     }
   }
 
+  socket.on('setPosition', function(data) {
+    console.log('setting position: ', data)
+    session.user.coords = data;
+    session.save();
+  });
+
   socket.on('joinRoom', function(data){
-    username = socket.request.session.user.name;
+    username = session.user.name;
     //save new address to session
-    socket.request.session.user.address = data.address;
-    socket.request.session.save();
+    session.user.address = data.address;
+    session.save();
 
-    console.log('joinRoom',socket.request.session);
+    console.log('joinRoom',session);
 
-    address = socket.request.session.user.address;
+    address = session.user.address;
     //join chat room with the name of the address
     socket.join(address.toString());
     console.log(username,' joined room ', address);
@@ -76,13 +84,13 @@ io.on('connection',function(socket){
     socket.leaveRoom(socket.chatRoom);
     console.log(username,' left the room ',address);
     //remove address property on session
-    delete socket.request.session.user.address;
+    delete session.user.address;
 
   });
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-    console.log('chatting',socket.request.session);
+    console.log('chatting',session);
 
     // console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
