@@ -6,13 +6,11 @@ var session = require('express-session');
 
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js')
-var chat = require('./models/chatController');
 
 var secret = require('./secret.js');
 
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js');
-var User = require('./auth/userModel');
 var matchController = require('./match/matchController');
 
 var port = require('./config.js').port;
@@ -29,7 +27,6 @@ var sessionHandler = session({
   saveUninitialized: true
 });
 
-app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(sessionHandler);
 
