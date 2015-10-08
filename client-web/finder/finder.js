@@ -1,7 +1,7 @@
-angular.module('kwiki.finder', ['services.socket', 'services.user'])
+angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.spinner'])
 
-.controller('FinderController', ['$scope', '$state','$window', 'Socket', 'User',
-  function($scope, $state, $window, Socket, User) {
+.controller('FinderController', ['$scope', '$state','$window', 'Socket', 'User', 'Spinner',
+  function($scope, $state, $window, Socket, User, Spinner) {
     $scope.disableButton = false;
 
     $scope.address = '';
@@ -22,6 +22,9 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
 
     // Google Map & Places reference: https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder
     $window.initMap = function() {
+
+      var spinner = Spinner.create();
+      spinner.spin(document.querySelector('.spinner'));
 
       var mapOptions;
       var directionsService = new google.maps.DirectionsService();
@@ -44,6 +47,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         // Geolocation reference: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
+
+            spinner.stop();
 
             console.log('found position:', position);
 
