@@ -3,6 +3,7 @@ var config = require('./config.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var morgan = require('morgan');
 
 var secret = require('./secret.js');
 
@@ -24,6 +25,7 @@ var sessionHandler = session({
   saveUninitialized: true
 });
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(sessionHandler);
 

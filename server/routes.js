@@ -30,7 +30,11 @@ router.get('/auth/google', passport.authenticate('google', {scope: 'openid profi
 
 router.get('/auth/google/return', passport.authenticate('google'), utils.createSession, function(req, res) {
   console.log(req.session);
-  res.status(302).set('Location', 'http://localhost:3000/').end(JSON.stringify(req.session.user));
+  res.redirect('/#/oauth');
+});
+
+router.get('/auth/google/token', function(req, res) {
+  res.json(req.session.user);
 });
 
 router.post('/signup', function(req, res) {
