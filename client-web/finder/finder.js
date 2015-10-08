@@ -25,9 +25,13 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
     $window.initMap = function() {
 
       var mapOptions;
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
       var infowindow = new google.maps.InfoWindow();
 
+      // Check for geolocation in order to center map
       if (!navigator.geolocation) {
+        // If user doesn't have geolocation enabled, default to Hack Reactor 
         mapOptions = {
           center: {
             lat: 37.783542,
@@ -38,7 +42,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         // Async
         createMap();
       } else {
-
         // Geolocation reference: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -59,7 +62,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
 
             infowindow.setPosition(pos);
             infowindow.setContent('Location found.');
-            console.log(pos)
             $scope.map.setCenter(pos);
           }, function() {
             handleLocationError(true, infowindow, map.getCenter());
@@ -67,6 +69,13 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infowindow, map.getCenter());
+        }
+
+        var handleLocationError = function(browserHasGeolocation, infowindow, pos) {
+          infowindow.setPosition(pos);
+          infowindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
         }
       }
 
@@ -85,7 +94,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
         });
 
         marker.addListener('click', function() {
-          // console.log('hi!');
           infowindow.open($scope.map, marker);
         });
 
@@ -95,6 +103,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
           place = autocomplete.getPlace();
           //Store place_id
           $scope.address = place.place_id;
+          // Call calcRoute once a place has been selected
+          calcRoute();
           //If place has no location, return out of function
           if (!place.geometry) {
             return;
@@ -122,14 +132,26 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
             place.formatted_address);
           infowindow.open($scope.map, marker);
         });
+        directionsDisplay.setMap($scope.map);
+        directionsDisplay.setPanel(document.getElementById("directions"));
       }
 
-      var handleLocationError = function(browserHasGeolocation, infowindow, pos) {
-        infowindow.setPosition(pos);
-        infowindow.setContent(browserHasGeolocation ?
-          'Error: The Geolocation service failed.' :
-          'Error: Your browser doesn\'t support geolocation.');
-      }
-    };
+      // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
+      var calcRoute = function() {
+        var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
+        var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
+
+        var request = {
+          origin: start,
+          destination: end,
+          travelMode: google.maps.TravelMode.WALKING
+        };
+        directionsService.route(request, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(result);
+          }
+        });
+      };
+    }
   }
 ]);
