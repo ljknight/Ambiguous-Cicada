@@ -57,7 +57,7 @@ io.on('connection',function(socket){
   //connect user to address if exists on the session
   if (session.user){
     if (session.user.address){
-      socket.join(session.user.address.toString());
+      // socket.join(session.user.address.toString());
     }
   }
 
@@ -68,9 +68,11 @@ io.on('connection',function(socket){
   });
 
   socket.on('feelingLucky', function() {
-    // Leave the restored chat if it was joined
-    socket.leave(session.user.address.toString());
     matchController.findOrAwaitMatch(socket);
+  });
+
+  socket.on('cancelLucky', function() {
+    matchController.cancelMatch(socket);
   });
 
   socket.on('leaveLuckyRoom', function() {

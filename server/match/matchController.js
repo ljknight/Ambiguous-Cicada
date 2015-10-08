@@ -36,5 +36,8 @@ luckyUsers.on('add', function(userOne) {
 module.exports = {
   findOrAwaitMatch: function(socket) {
     luckyUsers.add({socket: socket, data: socket.request.session.user});
+  },
+  cancelMatch: function(socket) {
+    luckyUsers.remove(luckyUsers.where({socket: socket}));
   }
 };

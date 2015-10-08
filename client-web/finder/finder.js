@@ -16,6 +16,11 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
       $state.transitionTo('chat');
     };
 
+    $scope.lucky = function() {
+      Socket.emit('feelingLucky');
+      $state.transitionTo('waiting');
+    };
+
     $scope.logOut = function() {
       User.logOut();
     };
