@@ -1,5 +1,4 @@
 <div ng-controller="ChatController" ng-init="loadChat()">
-<a ui-sref="finder">Find new address</a>
   <div>
     <div ng-repeat="data in chatMessages">
       <span class="user"> User:{{data.user}}</span>
@@ -10,9 +9,6 @@
   <form ng-submit="sendMessage()">
     <input ng-model="messageInput" type="message" placeholder="Type a message">
     <input type="submit" value="Submit" id="Submit">
-  </form>
-  <form>
-    <input ng-click='logOut()' type='submit' value="Log Out">
   </form>
 </div>
 
