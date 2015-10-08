@@ -2,6 +2,7 @@ angular.module('kwiki', [
   'kwiki.finder',
   'kwiki.auth',
   'kwiki.chat',
+  'kwiki.waiting',
   'kwiki.oauth',
   'services.socket',
   'services.user',
@@ -62,6 +63,18 @@ angular.module('kwiki', [
         },
 
       url: '/finder',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('waiting', {
+      views: {
+        page: {
+          templateUrl: 'waiting/waiting.html',
+          controller: 'WaitingController'
+        }
+      },
+      url: '/waiting',
       data: {
         requireLogin: true
       }

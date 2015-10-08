@@ -1,24 +1,4 @@
 angular.module('kwiki.chat', ['services.socket', 'services.user'])
-// .factory('ChatFactory', ['$http', '$rootScope', 'Socket', '$window', function ($http, $rootScope, Socket, $window) {
-
-//   var chatFact = {};
-
-//   chatFact.socket = Socket.connect('chat', $rootScope.user);
-
-//   chatFact.loadChat = function(callback) {
-//     this.socket.emit('loadChat', $rootScope.chatRoomId);
-//     this.socket.on('message', function(message) {
-//       callback(message);
-//     });
-//   };
-
-//   chatFact.postMessage = function (message, callback) {
-//     console.log(message);
-//     this.socket.emit('message', message);
-//   };
-
-//   return chatFact;
-// }])
 
 .controller('ChatController', ['$scope', 'Socket', 'User',
   function($scope, Socket, User) {

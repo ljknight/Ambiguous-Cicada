@@ -10,6 +10,7 @@ var secret = require('./secret.js');
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js');
 var User = require('./auth/userModel');
+var matchController = require('./match/matchController');
 
 var port = require('./config.js').port;
 
@@ -41,7 +42,7 @@ var router = require('./routes.js');
 
 //mount middleware to io request, now we have access to socket.request.session
 io.use(function(socket,next){
-  sessionHandler(socket.request,socket.request.res,next)
+  sessionHandler(socket.request, socket.request.res, next)
 });
 
 //***************** Sockets *******************
@@ -56,36 +57,53 @@ io.on('connection',function(socket){
   //connect user to address if exists on the session
   if (session.user){
     if (session.user.address){
-      socket.join(session.user.address.toString());
+      // socket.join(session.user.address.toString());
     }
   }
 
   socket.on('setPosition', function(data) {
     console.log('setting position: ', data)
-    session.user.coords = data;
+    session.coords = data;
     session.save();
   });
 
-  socket.on('joinRoom', function(data){
+  socket.on('feelingLucky', function() {
+    matchController.findOrAwaitMatch(socket);
+  });
+
+  socket.on('cancelLucky', function() {
+    matchController.cancelMatch(socket);
+  });
+
+  socket.on('leaveLuckyRoom', function() {
+    socket.leave(session.room);
+  });
+
+  socket.on('joinPlace', function(data){
     username = session.user.name;
-    //save new address to session
-    session.user.address = data.address;
+    //save new place to session
+    session.place = data.place;
     session.save();
 
-    console.log('joinRoom',session);
+    // console.log('joinRoom', session);
 
-    address = session.user.address;
+    place = session.place;
     //join chat room with the name of the address
-    socket.join(address.toString());
-    console.log(username,' joined room ', address);
+    session.room = place;
+    socket.join(place.toString());
+
+    console.log(username,' joined room ', place);
   });
 
-  socket.on('leaveRoom', function(){
-    socket.leaveRoom(socket.chatRoom);
+  socket.on('rejoinPlace', function() {
+    socket.join(session.place);
+  });
+
+  socket.on('leavePlace', function(){
+    socket.leave(socket.room);
     console.log(username,' left the room ',address);
     //remove address property on session
-    delete session.user.address;
-
+    delete session.user.place;
   });
 
   //if client socket emits send message
@@ -95,7 +113,7 @@ io.on('connection',function(socket){
     // console.log(socket.username,' sending message to room ',socket.chatRoom,' msg: ',msgData.text)
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(address).emit('chatMessage',msg);
+    socket.broadcast.to(session.room).emit('chatMessage', msg);
   });
 
   //completely disconnect
