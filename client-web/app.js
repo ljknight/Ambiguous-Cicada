@@ -2,6 +2,7 @@ angular.module('kwiki', [
   'kwiki.finder',
   'kwiki.auth',
   'kwiki.chat',
+  'kwiki.oauth',
   'services.socket',
   'services.user',
   'ui.router'
@@ -9,7 +10,10 @@ angular.module('kwiki', [
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise(function($injector) {
+    var $state = $injector.get('$state');
+    $state.go('finder');
+  });
 
   $stateProvider
     .state('login', {
@@ -42,6 +46,14 @@ angular.module('kwiki', [
       url: '/chat',
       data: {
         requireLogin: true
+      }
+    })
+    .state('oauth', {
+      templateUrl: 'oauth/oauth.html',
+      controller: 'OAuthController',
+      url: '/oauth',
+      data: {
+        requireLogin: false
       }
     });
 
