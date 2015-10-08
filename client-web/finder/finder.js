@@ -140,6 +140,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user'])
       var calcRoute = function() {
         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
+
         var request = {
           origin: start,
           destination: end,
