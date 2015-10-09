@@ -1,26 +1,17 @@
 <div>
-  <div class="wrapper">
-    <div class="search-match">Search for a match within {{radius}} miles</p>
-    <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
+  <div class="lucky-container">
+    <div class="search-match">Search for a match within {{radius}} miles</div>
+    <input class="slider" type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
     <button ng-click='lucky()'>I'm feeling lucky!</button>
   </div>
   <div id="map"></div>
   <div class="spinner"></div>
   <div class="input-container">
     <input id="place-input" type="text" placeholder="Enter a location">
-  </div>
-  <ul class="button-container">
-    <li><button ng-click='submit()'>Find me a kwiki!</button></li>
-    <li><button ng-click='directions()'>Get directions</button></li>
-    <div id="floating-panel">
-      <b>Mode of Travel: </b>
-      <!-- <select id="mode"> -->
-        <button value="DRIVING">Driving</button>
-        <button value="WALKING">Walking</button>
-        <button value="BICYCLING">Bicycling</button>
-        <button value="TRANSIT">Transit</button>
-      <!-- </select> -->
+    <div class="button-container">
+      <button ng-click='submit()'>Find me a kwiki!</button></li>
+      <button class="directions-button" ng-click='directions()'>Get directions</button>
     </div>
-  </ul>
+  </div>
   <div id="directions"></div>
 </div>
