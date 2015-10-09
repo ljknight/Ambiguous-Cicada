@@ -2,7 +2,7 @@
 
 # Kwiki
 
-Kwiki is a mobile chat app that brings closeby users together.
+Kwiki is a mobile and web chat application that brings closeby users together.
 
 Refer to our [Documentation](DOCS.md) for internal details of our app.
 
@@ -11,6 +11,13 @@ Refer to our [Documentation](DOCS.md) for internal details of our app.
   - __Product Owner__: Daniel O'Leary
   - __Scrum Master__: JT Knox
   - __Development Team__: Niraj Vora, Michael Junio, Daniel O'Leary, JT Knox
+
+## Legacy Kwiki Team
+
+  - __Product Owner__: Laura Knight
+  - __Scrum Master__: Cynthia Chen
+  - __Development Team__: Cameron Martin, Cynthia Chen, Laura Knight, Michael Sova
+
 
 ## Table of Contents
 
@@ -51,20 +58,19 @@ The variables in `.env` can be manually added to the production server with `$ h
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+gulp watch
+npm start
 ```
+### Added new features
+- Ability to sign in through a user's Google account
+- Ability to find a user's current location using geolocation
+- Ability to search for and get directions to a specific location using Google Maps
+- Ability to chat with a random user within 10 miles of one's location
+- Ability to chat with multiple users who searched for the same location
 
 ### Known bugs and issues
 This project contains known bugs and issues, which can all be accessed [here](https://github.com/Ambiguous-Cicada/Ambiguous-Cicada/issues). Feel free to add to them.
-
-### Potential new features
-- Geolocation using device GPS
-- Location based restaurant/bar suggestions
-- Post emoji, images, video, location, etc
-- Allow multiple chats per client
-- Group chats with more than two users
 
 ## Contributing
 
