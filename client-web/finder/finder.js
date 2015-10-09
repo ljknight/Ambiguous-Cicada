@@ -5,11 +5,13 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
 
     var place;
     var placeID;
+    var placeName;
 
     $scope.submit = function() {
       Socket.emit('joinPlace', {
         username: User.current(),
-        place: placeID
+        place: placeID,
+        placeName: placeName
       });
       $state.transitionTo('chat');
     };
@@ -121,6 +123,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           place = autocomplete.getPlace();
           //Store place_id
           placeID = place.place_id;
+          // grab place name
+          placeName = place.name;
           //If place has no location, return out of function
           if (!place.geometry) {
             return;
