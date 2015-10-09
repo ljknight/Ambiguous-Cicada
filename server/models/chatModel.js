@@ -10,6 +10,7 @@ var MessageSchema = new Schema({
 
 var ChatroomSchema = new Schema({
   place: String,
+  placeName: String,
   users: [{
     id: String,
     username: String,

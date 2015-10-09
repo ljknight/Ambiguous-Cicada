@@ -54,13 +54,13 @@ io.on('connection',function(socket){
   var session  = socket.request.session
   var place,username;
   //connect user to place if exists on the session
-  console.log('socket connected \n place: ',session.place,"\n user: ",session.user)
+  console.log('socket connected \n placeName: ',session.placeName,"\n user: ",session.user)
 
   if (session.user){
     if (session.place){
       chat.getMessages(session.place)
       .then(function(messages){
-        socket.emit('populateChat',messages);
+        socket.emit('populateChat',{messages:messages,placeName:session.placeName});
       })
       socket.join(session.place.toString());
     }
@@ -102,7 +102,7 @@ io.on('connection',function(socket){
       .getMessages(session.place)
       .then(function(messages){
         console.log('messages',messages)
-        socket.emit('populateChat',messages)
+        socket.emit('populateChat',{messages:messages,placeName:chatroom.placeName})
       })
     })
     //join chat room with the name of the address

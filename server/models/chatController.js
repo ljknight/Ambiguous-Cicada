@@ -10,7 +10,7 @@ module.exports.addChatroom = function(data) {
       console.log('chatroom already exists')
       return chatroom;
     }
-    return Chatroom.create({place: place, users: [], messages: []}) 
+    return Chatroom.create({place: data.place,placeName: data.placeName, users: [], messages: []}) 
   })
 };
 
