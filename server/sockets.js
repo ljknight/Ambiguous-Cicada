@@ -88,7 +88,7 @@ module.exports = function(socket) {
       .getMessages(socket.handshake.session.place)
       .then(function(messages) {
         console.log('messages', messages);
-        socket.emit('populateChat', messages);
+        socket.emit('populateChat', {messages:messages,placeName:socket.handshake.session.placeName});
       });
     });
     //join chat room with the name of the address

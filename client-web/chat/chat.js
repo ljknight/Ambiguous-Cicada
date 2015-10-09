@@ -7,6 +7,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     $scope.user = User.current();
 
     Socket.on('populateChat', function(data) {
+      console.log('received chat messages: ', data.messages);
       var messages = data.messages;
       var placeName = data.placeName;
       $scope.roomname = placeName;
