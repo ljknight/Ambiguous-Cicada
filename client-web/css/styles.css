@@ -128,7 +128,7 @@ h2 {
 
 #nav {
   display: table;
-  margin: 0 auto 50px;
+  margin: 30px auto 30px;
 }
 
 .nav li {
@@ -250,10 +250,26 @@ h2 {
   width: 510px;
 }
 
+.room-info {
+  display: table;
+  margin: 0 auto;
+}
+
+.room-info li {
+  float: left;
+}
+
+.room-info li:first-child {
+  margin-right: 30px;
+}
+
+
 .messages-container {
+  clear: both;
   height: 350px;
   overflow: auto;
   margin-top: 30px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
