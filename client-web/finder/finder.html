@@ -5,11 +5,21 @@
     <input id="place-input" type="text" placeholder="Enter a location">
   </div>
   <ul class="button-container">
-    <button ng-click='submit()'>Find me a kwiki!</button>
-    <button ng-click='lucky()'>I'm feeling lucky!</button>
-  <button ng-click='directions()'>Get directions</button>
+    <li><button ng-click='submit()'>Find me a kwiki!</button></li>
+    <li><button ng-click='lucky()'>I'm feeling lucky!</button></li>
+    <li><button ng-click='directions()'>Get directions</button></li>
+      <div id="floating-panel">
+        <b>Mode of Travel: </b>
+        <select id="mode">
+          <option value="DRIVING">Driving</option>
+          <option value="WALKING">Walking</option>
+          <option value="BICYCLING">Bicycling</option>
+          <option value="TRANSIT">Transit</option>
+        </select>
+      </div>
+    <li><button ng-click='submit()'>Find me a kwiki!</button></li>
+    <li><button ng-click='lucky()'>I'm feeling lucky!</button></li>
+    <p>Search for a match within {{radius}} miles</p>
+    <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
   </ul>
-  <div id="directions"></div>
-  <div class="search-match">Search for a match within {{radius}} miles</div>
-  <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
 </div>
