@@ -6,7 +6,7 @@ var session = require('express-session');
 
 var chat = require('./models/chatController')
 
-var MongoStore = require('connect-mongo')(session);
+// var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js')
 
 var secret = require('./secret.js');
@@ -23,7 +23,7 @@ var app = express();
 
 var sessionHandler = session({
   // should make session persist even if server crashes
-  store: new MongoStore({ mongooseConnection: db.connection }),
+  // store: new MongoStore({ mongooseConnection: db.connection }),
   secret: secret,
   resave: true,
   saveUninitialized: true
@@ -45,43 +45,6 @@ var router = require('./routes.js');
 //mount middleware to io request, now we have access to socket.request.session
 io.use(function(socket,next){
   sessionHandler(socket.request, socket.request.res, next)
-});
-
-//***************** socket chat routes ****************
-//create new chatroom
-router.post('/:chatroom/chatroom',function(req,res){
-  var chatroomId = req.params.chatroom;
-  chat.addChatroom(chatroomId);
-});
-//add users to chatroom
-router.post('/:chatroom/users',function(req,res){
-  var username = req.body.username;
-  var chatroomId = req.params.chatroom;
-  chat.addMesage({username:username,name:chatroomId})
-});
-//get users from chatroom
-router.get('/:chatroom/users',function(req,res){
-  var chatroomId = req.params.chatroom;
-  chat.getUsersFromChatroom(chatroomId);
-});
-
-//create a new message in a chatroom
-router.post('/:chatroom/messages', function(req, res) {
-  var chatroomId = req.params.chatroom;
-  message = {
-    username:req.body.username,
-    text:req.body.text
-  }
-  chat.addMesage(chatroomId,message)
-});
-//get messages from a chatRoom
-router.get('/:chatroom/messages', function(req, res) {
-  var chatroomId = req.params.chatroom;
-  chat.getMessages(chatroomId)
-  .then(function(data){
-    console.log('got some data back: ',data)
-    res.json(data);
-  })
 });
 
 //***************** Sockets *******************
@@ -162,7 +125,8 @@ io.on('connection',function(socket){
   socket.on('sendMessage',function(msg){
     // console.log('sended message: ',msg)
     // if (session.room === session.place){
-      console.log(session.user.name,' sent message \n to room : ',session.place)
+      console.log('session',session)
+      // console.log(session.user.name,' sent message \n to room : ',session.place)
       chat.addMessage(session.place,msg,session.user.name)
       .then(function(chatroom){
         console.log('message saved: ',chatroom)
