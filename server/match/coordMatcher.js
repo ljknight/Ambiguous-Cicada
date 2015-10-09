@@ -1,12 +1,9 @@
-var coordMatcher = function(maxDist) {
-  this.maxDist = maxDist;
+exports.isMatch = function(itemA, itemB) {
+  var distance = getDistance(itemA.coords, itemB.coords);
+  return distance < Math.min(itemA.radius, itemB.radius);
 };
 
-coordMatcher.prototype.isMatch = function(coordsA, coordsB) {
-  return this._getDistance(coordsA, coordsB) < this.maxDist;
-};
-
-coordMatcher.prototype._getDistance = function(coordsA, coordsB) {
+var getDistance = function(coordsA, coordsB) {
 
   var R = 3958.7558657440545; // Radius of earth in Miles
   var toRad = function (degrees) {
@@ -25,5 +22,3 @@ coordMatcher.prototype._getDistance = function(coordsA, coordsB) {
 
   return dist;
 };
-
-module.exports = coordMatcher;

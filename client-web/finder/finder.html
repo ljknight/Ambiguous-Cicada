@@ -4,10 +4,12 @@
   <div class="input-container">
     <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
   </div>
-  <div class="button-container">
-  <!--  Make these buttons a list  -->
-    <button class="map-button"ng-click='submit()'>Find me a kwiki!</button>
-    <button class="map-button lucky" ng-click='lucky()'>I'm feeling lucky!</button>
-  </div>
-  <div ng-model="directionsModel" id="directions"></div>
+  <ul class="button-container">
+    <button ng-click='submit()'>Find me a kwiki!</button>
+    <button ng-click='lucky()'>I'm feeling lucky!</button>
+  <button ng-click='directions()'>Get directions</button>
+  </ul>
+  <div id="directions"></div>
+  <div class="search-match">Search for a match within {{radius}} miles</div>
+  <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
 </div>
