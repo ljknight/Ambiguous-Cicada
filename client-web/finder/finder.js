@@ -37,7 +37,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
       var mapOptions;
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
-      var infowindow = new google.maps.InfoWindow({maxWidth: 150});
+      var infowindow = new google.maps.InfoWindow({maxWidth: 175});
 
       // Check for geolocation in order to center map
       if (!navigator.geolocation) {
