@@ -6,7 +6,7 @@ var session = require('express-session');
 
 var chat = require('./models/chatController')
 
-// var MongoStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js')
 
 var secret = require('./secret.js');
@@ -23,7 +23,7 @@ var app = express();
 
 var sessionHandler = session({
   // should make session persist even if server crashes
-  // store: new MongoStore({ mongooseConnection: db.connection }),
+  store: new MongoStore({ mongooseConnection: db.connection }),
   secret: secret,
   resave: true,
   saveUninitialized: true
@@ -107,7 +107,7 @@ io.on('connection',function(socket){
     //join chat room with the name of the address
     session.room = place;
     socket.join(session.place.toString());
-    console.log(session.user.name,' joined a room \n place: ',session.place)
+    console.log(session.user.name,' joined a room place: ',session.place)
   });
 
   socket.on('rejoinPlace', function() {
@@ -123,9 +123,10 @@ io.on('connection',function(socket){
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
+      console.log(session.user.name,' sent a message to: ',session.place)
+
     // console.log('sended message: ',msg)
     // if (session.room === session.place){
-      console.log('session',session)
       // console.log(session.user.name,' sent message \n to room : ',session.place)
       chat.addMessage(session.place,msg,session.user.name)
       .then(function(chatroom){
