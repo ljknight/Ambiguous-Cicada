@@ -12,7 +12,7 @@ if (process.env.NODE_ENV){
 	var clientID = process.env.clientID;
 	var clientSecret = process.env.clientSecret;
 } else {
-	var googleOAuth = require('./googleoauth');
+	var googleoauth = require('./googleoauth');
 	var clientID = googleoauth.clientID;
 	var clientSecret = googleoauth.clientSecret;
 }
