@@ -1,6 +1,7 @@
 var auth = require('./models/userController');
 var utils = require('./lib/utils');
 var chat = require('./models/chatController');
+var matchController = require('./match/matchController');
 
 module.exports = function(socket) {
   var session  = socket.request.session
