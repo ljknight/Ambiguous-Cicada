@@ -90,7 +90,7 @@ h2 {
 }
 
 .auth {
-  width: 350px;
+  width: 320px;
   margin: 0 auto;
 }
 
@@ -100,15 +100,17 @@ h2 {
 }
 
 .submit {
-  margin-left: 15px;
-  margin-right: 10px;
+  display: block;
+  margin: 0 auto;
   width: 100px;
 }
 
 .signup {
-  margin-top: 10px;
+  /*margin-top: 10px;*/
+  display: block;
+  margin: 0 auto;
   width: 100px;
-  margin-left: 110px;
+  /*margin-left: 110px;*/
 }
 
 .google {
@@ -120,15 +122,19 @@ h2 {
   /*font-size: 16px;
   padding: 10px;
   */
+  display: block;
+  margin: 20px auto 0;
   width: 180px;
 }
 
 .link {
-  width: 300px;
-  padding-top: 30px;
-  margin: 0 auto;
+  /*width: 300px;*/
   font-size: 18px;
+  margin: 0 auto;
+  padding-top: 30px;
+  text-align: center;
 }
+
 
 /* Nav View */
 
@@ -192,6 +198,11 @@ h2 {
   text-align: center;
 }
 
+.lucky-container input {
+  /* Trying to line up with other buttons */
+  margin-bottom: 8px;
+}
+
 .search-match {
   padding-left: 20px;
   text-align: center;
@@ -202,7 +213,7 @@ h2 {
 }
 
 .input-container {
-  width: 350px;
+  width: 300px;
   float: right;
   margin: 0;
   padding-top: 5px;
@@ -215,17 +226,16 @@ h2 {
  width: 300px;
  height: 45px;
  padding: 0 11px 0 13px;
- margin-bottom: 15px;
+ margin-bottom: 20px;
 }
 
 .button-container {
   width: 350px;
   margin: 0;
-  margin-left: 7px;
 }
 
 .directions-button {
-  margin-left: 5px;
+  margin-left: 15px;
   width: 130px;
 }
 
@@ -256,7 +266,12 @@ h2 {
   float: right;
   font-size: 14px;
   height: 200px;
-  margin: 50 0 0;
+  margin: 50px 0 0;
+}
+
+/* Lines up top of map & directions */
+.adp-warnbox {
+  margin-top: 0;
 }
 
 /* Chat View */
