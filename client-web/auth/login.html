@@ -16,6 +16,8 @@
   <button class="submit" ng-click='logIn(user)'>Submit</button>
   <a class="google" href="/auth/google">Sign in with Google</a>
   <div class="link"><a href="/#/signup">Don't have an account? Sign Up</a></div>
+  <div class="spinner"></div>
+  <div class="error" ng-show="error"> {{error}}</div>
 </form>
 </div>
 
