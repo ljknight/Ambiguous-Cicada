@@ -10,7 +10,6 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
       var messages = data.messages;
       var placeName = data.placeName;
       $scope.roomname = placeName;
-      // console.log('sending: ',messages)
       for (var i = 0; i < messages.length; i++) {
         var msg = messages[i];
         $scope.chatMessages.push({
