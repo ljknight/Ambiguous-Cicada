@@ -21,4 +21,5 @@ Sign in and meet up with nearby people right away.
 ## Customer Quotes ##
 
 “I was really bored one day, and this app turned my whole day around!” - Kyle Cho
+
 "I met Kyle Cho!" - Taylor Lehman
