@@ -178,12 +178,10 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
         // End uses location object with lat(J), long(M) returned after user selects a place 
         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
 
-        //Get selected mode from input
-        var selectedMode = document.getElementById("mode").value;
         var request = {
           origin: start,
           destination: end,
-          travelMode: google.maps.TravelMode[selectedMode]
+          travelMode: google.maps.TravelMode.WALKING
         };
         directionsService.route(request, function(result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
