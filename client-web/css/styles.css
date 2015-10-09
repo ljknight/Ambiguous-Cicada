@@ -10,8 +10,9 @@ body {
 }
 
 .spinner {
-  margin-left: 325px;
-  margin-top: 250px;
+  margin: 0 auto;
+  margin-left: 80px;
+  margin-top: 100px;
 }
 
 ul {
@@ -170,6 +171,11 @@ h2 {
 /* Map View */
 
 /* Google map must have height & width to render */
+.map-spinner {
+  margin-left: 630px;
+  margin-top: 270px;
+}
+
 #map {
   float: left;
   height: 420px;
@@ -226,7 +232,6 @@ h2 {
   margin-bottom: 25px;
 }
 
-<<<<<<< HEAD
 .lucky-container {
   width: 500px;
   margin: 0 auto;
