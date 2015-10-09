@@ -1,5 +1,8 @@
 // Basic Server Requirements
+
+//alreade deals with deployment env variables
 var config = require('./config.js');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -9,7 +12,8 @@ var morgan = require('morgan');
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js');
 
-var secret = require('./secret.js');
+//if in production there will be env variable 
+var secret = process.env.SECRET || require('./secret.js');
 
 var port = require('./config.js').port;
 

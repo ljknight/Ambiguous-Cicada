@@ -6,11 +6,19 @@ var chat = require('./models/chatController');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var googleOAuth = require('./googleoauth');
 
+//setup process env 
+if (process.env.NODE_ENV){
+	var clientID = process.env.clientID;
+	var clientSecret = process.env.clientSecret;
+} else {
+	var googleOAuth = require('./googleoauth');
+	var clientID = googleoauth.clientID;
+	var clientSecret = googleoauth.clientSecret;
+}
 passport.use(new GoogleStrategy({
-  clientID: googleOAuth.clientID,
-  clientSecret: googleOAuth.clientSecret,
+  clientID: clientID,
+  clientSecret: clientSecret,
   callbackURL: 'http://localhost:3000/auth/google/return'
 }, function(accessToken, refreshToken, profile, done) {
   done(null, {name: profile.displayName});
