@@ -12,9 +12,9 @@ exports.checkUser = function(req, res, next) {
 
 exports.createSession = function(req, res, next) {
   // req.session.regenerate(function() {
-    req.session.user = req.user;
-    req.session.save();
-    next();
+  req.session.user = req.user;
+  req.session.save();
+  next();
   // });
 };
 

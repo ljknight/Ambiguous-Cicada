@@ -1,6 +1,6 @@
 var db = require('../db');
 var Schema = db.Schema,
-    ObjectId = Schema.ObjectId;
+  ObjectId = Schema.ObjectId;
 
 var MessageSchema = new Schema({
   username: String,

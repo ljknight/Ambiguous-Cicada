@@ -1,3 +1,4 @@
+/*global angular, moment*/
 angular.module('kwiki.chat', ['services.socket', 'services.user'])
 
 .controller('ChatController', ['$scope', 'Socket', 'User',

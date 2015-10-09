@@ -111,7 +111,7 @@ module.exports = function(socket) {
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-      console.log(socket.handshake.session.user.name, ' sent a message to: ', socket.handshake.session.room);
+    console.log(socket.handshake.session.user.name, ' sent a message to: ', socket.handshake.session.room);
 
     // console.log('sended message: ',msg)
     if (socket.handshake.session.room === socket.handshake.session.place) {

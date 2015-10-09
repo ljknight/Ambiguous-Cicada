@@ -1,3 +1,4 @@
+/*global angular, io*/
 angular.module('services.socket', [])
 
 .factory('Socket', [function() {

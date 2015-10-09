@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('kwiki', [
   'kwiki.finder',
   'kwiki.auth',
@@ -21,11 +22,11 @@ angular.module('kwiki', [
 
       views: {
 
-          page: {
+        page: {
             templateUrl: 'auth/login.html',
             controller: 'AuthController',
           }
-        },
+      },
 
       url: '/login',
       data: {
@@ -36,11 +37,11 @@ angular.module('kwiki', [
 
       views: {
 
-          page: {
+        page: {
             templateUrl: 'auth/signup.html',
             controller: 'AuthController',
           }
-        },
+      },
       
       url: '/signup',
       data: {
@@ -51,16 +52,16 @@ angular.module('kwiki', [
 
       views: {
           
-          nav: {
+        nav: {
             templateUrl: './nav/nav.html',
             controller: 'AuthController'
           },
 
-          page: {
+        page: {
             templateUrl: 'finder/finder.html',
             controller: 'FinderController',
           }
-        },
+      },
 
       url: '/finder',
       data: {
@@ -83,16 +84,16 @@ angular.module('kwiki', [
 
       views: {
           
-          nav: {
+        nav: {
             templateUrl: './nav/nav.html',
             controller: 'AuthController'
           },
 
-          page: {
+        page: {
             templateUrl: 'chat/chat.html',
             controller: 'ChatController',
           }
-        },
+      },
 
       url: '/chat',
       data: {
@@ -103,11 +104,11 @@ angular.module('kwiki', [
 
       views: {
 
-          page: {
+        page: {
             templateUrl: 'oauth/oauth.html',
             controller: 'OAuthController',
           }
-        },
+      },
     
       url: '/oauth',
       data: {

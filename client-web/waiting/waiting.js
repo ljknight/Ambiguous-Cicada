@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('kwiki.waiting', ['services.spinner', 'services.socket'])
   .controller('WaitingController', ['$scope', '$state', 'Spinner', 'Socket', 
     function($scope, $state, Spinner, Socket) {
@@ -7,4 +8,4 @@ angular.module('kwiki.waiting', ['services.spinner', 'services.socket'])
         Socket.emit('cancelLucky');
         $state.transitionTo('finder');
       };
-  }]);
+    }]);

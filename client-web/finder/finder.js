@@ -1,3 +1,4 @@
+/*global angular, google*/
 angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.spinner'])
 
 .controller('FinderController', ['$scope', '$state', '$window', 'Socket', 'User', 'Spinner',
@@ -171,25 +172,25 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
           place = '';
-       };
+        };
       };
 
       // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
       var calcRoute = function() {
-         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
+        var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
          // End uses location object with lat(J), long(M) returned after user selects a place 
-         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
+        var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
  
-         var request = {
+        var request = {
            origin: start,
            destination: end,
            travelMode: google.maps.TravelMode.WALKING
          };
-         directionsService.route(request, function(result, status) {
+        directionsService.route(request, function(result, status) {
            if (status == google.maps.DirectionsStatus.OK) {
              directionsDisplay.setDirections(result);
            }
-        });
+         });
       };
     };
 

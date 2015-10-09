@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('services.user', [])
 
 .factory('User', ['$http', '$state', '$window', '$q', 'Socket', function ($http, $state, $window, $q, Socket) {
@@ -24,8 +25,8 @@ angular.module('services.user', [])
           current(data.name);
           resolve();
         });
-      })  
-    })
+      });  
+    });
 
     // return $http({
     //   method: 'POST',
@@ -38,7 +39,7 @@ angular.module('services.user', [])
 
     return $q(function(resolve, reject) {
       Socket.emit('login', userObject);
-        Socket.once('loginSuccess', function(data) {
+      Socket.once('loginSuccess', function(data) {
           $window.localStorage.setItem('com.kwiki', JSON.stringify(data.token));
           current(data.name);
           resolve();
@@ -82,7 +83,7 @@ angular.module('services.user', [])
 
   var isAuth = function() {
     return $window.localStorage.getItem('com.kwiki');
-  }
+  };
 
   return {
     current: current,

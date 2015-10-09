@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('kwiki.oauth', [])
   .controller('OAuthController', ['$state', '$http', '$window', 'User', function($state, $http, $window, User) {
     $http({

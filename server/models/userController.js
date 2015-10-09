@@ -6,10 +6,10 @@ module.exports.signup = function(username, password) {
   .findOne({username: username})
   .then(function(user){
     if (!user){
-      return User.create({username: username, password: password}) 
+      return User.create({username: username, password: password}); 
     }
-    throw new Error('user already exists')
-  })
+    throw new Error('user already exists');
+  });
 };
 
 // login function that validates, authenticates and returns a promise
@@ -23,9 +23,9 @@ module.exports.login = function(username, password) {
     return user.comparePasswords(password)
     .then(function(foundUser){
       if (foundUser){
-        return {id : user._id, name :user.username}
+        return {id : user._id, name :user.username};
       }
       throw new Error('Wrong password');
-    })
-  })
+    });
+  });
 };
