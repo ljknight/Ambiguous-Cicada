@@ -1,8 +1,10 @@
 <div id="chat" ng-controller="ChatController" ng-init="loadChat()">
-  <div class="messages" ng-repeat="data in chatMessages">
-    <span class="date">{{data.humanTime}}</span>
-    <span class="user">{{data.user}}</span>
-    <span class="message">says: {{data.text}} </span>
+  <div class="messages-container">
+    <div class="chat" ng-repeat="data in chatMessages">
+      <span class="date">{{data.humanTime}}</span>
+      <span class="user">{{data.user}}</span>
+      <span class="message">says: {{data.text}} </span>
+    </div>
   </div>
   <form ng-submit="sendMessage()">
     <input ng-model="messageInput" type="message" placeholder="Type a message">

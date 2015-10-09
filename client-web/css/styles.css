@@ -135,9 +135,14 @@ button {
   width: 510px;
 }
 
-.messages {
-  margin-bottom: 25px;
+.messages-container {
+  height: 350px;
+  overflow: auto;
   text-align: left;
+}
+
+.chat {
+  margin-bottom: 25px;
 }
 
 .date {

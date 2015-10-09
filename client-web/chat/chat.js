@@ -6,7 +6,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     $scope.chatMessages = [];
 
     Socket.on('populateChat',function(messages){
-      console.log('sending: ',messages)
+      console.log('sending: ',messages);
       for (var i = 0; i < messages.length; i++) {
         var msg = messages[i];
         $scope.chatMessages.push({
@@ -15,9 +15,9 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
          timestamp: msg.timestamp,
          humanTime: moment(msg.timestamp).fromNow()
        });
-      };
+      }
       $scope.$apply();
-    })
+    });
 
     Socket.on('chatMessage', function(msg) {
       $scope.chatMessages.push({
@@ -38,7 +38,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     }, 30 * Math.pow(10, 3));
 
     $scope.sendMessage = function() {
-      console.log('current User: ',User.current())
+      console.log('current User: ',User.current());
       if ($scope.messageInput) {
         Socket.emit('sendMessage', $scope.messageInput);
         $scope.chatMessages.push({
@@ -52,3 +52,6 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     };
   }
   ]);
+
+var messagesContainer = document.getElementsByClassName('messages-container')[0]; 
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
