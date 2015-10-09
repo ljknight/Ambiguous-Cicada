@@ -116,6 +116,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
         });
 
         autocomplete.addListener('place_changed', function() {
+          directionsDisplay.setMap(null);
+          directionsDisplay.setPanel(null);
           infowindow.close();
           //Invoke getPlace method and returns PlaceResult
           place = autocomplete.getPlace();
@@ -164,27 +166,25 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           // Display directions on map and panel
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
-          place = '';
-        };
+          $scope.place = '';
+       };
       };
 
       // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
       var calcRoute = function() {
-        var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
-        // End uses location object with lat(J), long(M) returned after user selects a place 
-        var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
-
-        //Get selected mode from input
-        var selectedMode = document.getElementById("mode").value;
-        var request = {
-          origin: start,
-          destination: end,
-          travelMode: google.maps.TravelMode[selectedMode]
-        };
-        directionsService.route(request, function(result, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(result);
-          }
+         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
+         // End uses location object with lat(J), long(M) returned after user selects a place 
+         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
+ 
+         var request = {
+           origin: start,
+           destination: end,
+           travelMode: google.maps.TravelMode.WALKING
+         };
+         directionsService.route(request, function(result, status) {
+           if (status == google.maps.DirectionsStatus.OK) {
+             directionsDisplay.setDirections(result);
+           }
         });
       };
     };
