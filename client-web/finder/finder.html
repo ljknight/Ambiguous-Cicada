@@ -4,6 +4,15 @@
   <div class="spinner"></div>
   <div id="directions"></div>
   <button ng-click='directions()'>Get directions</button>
+  <div id="floating-panel">
+    <b>Mode of Travel: </b>
+    <select id="mode">
+      <option value="DRIVING">Driving</option>
+      <option value="WALKING">Walking</option>
+      <option value="BICYCLING">Bicycling</option>
+      <option value="TRANSIT">Transit</option>
+    </select>
+  </div>
   <button ng-click='submit()'>Find me a kwiki!</button>
   <button ng-click='lucky()'>I'm feeling lucky!</button>
   <p>Search for a match within {{radius}} miles</p>
