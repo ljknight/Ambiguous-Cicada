@@ -25,5 +25,10 @@ angular.module('kwiki.auth', ['services.user'])
         });
     };
 
-    $scope.logOut = User.logOut;
+    $scope.logOut = function() {
+      User.logOut()
+        .then(function() {
+          $state.transitionTo('login');
+        });
+    };
 }]);

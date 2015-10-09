@@ -1,6 +1,6 @@
 angular.module('services.user', [])
 
-.factory('User', ['$http', '$state', '$window', function ($http, $state, $window) {
+.factory('User', ['$http', '$state', '$window', '$q', 'Socket', function ($http, $state, $window, $q, Socket) {
 
   var _currentUsername = $window.localStorage.getItem('com.kwiki.username');
 
@@ -14,37 +14,70 @@ angular.module('services.user', [])
   };
 
   var add = function(userObject) {
-    return $http({
-      method: 'POST',
-      url: '/signup',
-      data: userObject
-    });
+
+    return $q(function(resolve, reject) {
+      Socket.emit('signup', userObject);
+      Socket.once('signupSuccess', function(data) {
+        Socket.emit('login', userObject);
+        Socket.once('loginSuccess', function(data) {
+          $window.localStorage.setItem('com.kwiki', JSON.stringify(data.token));
+          current(data.name);
+          resolve();
+        });
+      })  
+    })
+
+    // return $http({
+    //   method: 'POST',
+    //   url: '/signup',
+    //   data: userObject
+    // });
   };
 
   var logIn = function(userObject) {
-    return $http({
-      method: 'POST',
-      url: '/login',
-      data: userObject
-    }).then(function(res) {
-      console.log(res);
-      $window.localStorage.setItem('com.kwiki', JSON.stringify(res.data));
-      current(res.data.name);
+
+    return $q(function(resolve, reject) {
+      Socket.emit('login', userObject);
+        Socket.once('loginSuccess', function(data) {
+          $window.localStorage.setItem('com.kwiki', JSON.stringify(data.token));
+          current(data.name);
+          resolve();
+        });
     });
+    
+    // return $http({
+    //   method: 'POST',
+    //   url: '/login',
+    //   data: userObject
+    // }).then(function(res) {
+    //   console.log(res);
+    //   $window.localStorage.setItem('com.kwiki', JSON.stringify(res.data));
+    //   current(res.data.name);
+    // });
 
   };
 
   var logOut = function() {
-    $http({
-      method: 'POST',
-      url: '/logout'
-    }).then(function (res) {
-      $window.localStorage.removeItem('com.kwiki');
-      $state.transitionTo('login');
-    })
-    .catch(function (err) {
-      console.log(err);
+
+    return $q(function(resolve, reject) {
+      Socket.emit('logout');
+      Socket.once('logoutSuccess', function() {
+        $window.localStorage.removeItem('com.kwiki');
+        $window.localStorage.removeItem('com.kwiki.username');
+        resolve();
+      });  
     });
+    
+    // $http({
+    //   method: 'POST',
+    //   url: '/logout'
+    // }).then(function (res) {
+    //   $window.localStorage.removeItem('com.kwiki');
+    //   $state.transitionTo('login');
+    // })
+    // .catch(function (err) {
+    //   console.log(err);
+    // });
   };
 
   var isAuth = function() {

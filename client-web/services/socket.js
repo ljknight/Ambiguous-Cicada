@@ -2,6 +2,12 @@ angular.module('services.socket', [])
 
 .factory('Socket', [function() {
 
-  return io();
+  var socket = io();
+
+  socket.on('error', function(data) {
+    console.err(data.err);
+  });
+
+  return socket;
 
 }]);

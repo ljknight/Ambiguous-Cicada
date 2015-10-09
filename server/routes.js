@@ -39,36 +39,36 @@ router.get('/auth/google/token', function(req, res) {
 });
 
 //************* Authentication Routes **************
-router.post('/signup', function(req, res) {
-  auth.signup(req.body.username, req.body.password)
-  .then(function(result) {
-    res.status(201)
-    .send(JSON.stringify(result));
-  })
-  .catch(function(err) {
-    console.log(err)
-    res.status(300)
-    .send(err);
-  });
-});
+// router.post('/signup', function(req, res) {
+//   auth.signup(req.body.username, req.body.password)
+//   .then(function(result) {
+//     res.status(201)
+//     .send(JSON.stringify(result));
+//   })
+//   .catch(function(err) {
+//     console.log(err)
+//     res.status(300)
+//     .send(err);
+//   });
+// });
 
-router.post('/login', function(req, res) {
-  auth.login(req.body.username, req.body.password)
-  .then(function(user) {
-    req.user = user;
-    utils.createSession(req, res, function() {
-      res.json(req.session.user);
-    });
-  })
-  .catch(function(err) {
-    console.log(err)
-    res.status(300)
-    .send(err);
-  });
-});
+// router.post('/login', function(req, res) {
+//   auth.login(req.body.username, req.body.password)
+//   .then(function(user) {
+//     req.user = user;
+//     utils.createSession(req, res, function() {
+//       res.json(req.session.user);
+//     });
+//   })
+//   .catch(function(err) {
+//     console.log(err)
+//     res.status(300)
+//     .send(err);
+//   });
+// });
 
-router.post('/logout', utils.destroySession, function(req, res) {
-  res.status(200).end();
-});
+// router.post('/logout', utils.destroySession, function(req, res) {
+//   res.status(200).end();
+// });
 
 module.exports = router;
