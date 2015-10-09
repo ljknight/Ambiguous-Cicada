@@ -1,10 +1,8 @@
 var auth = require('./models/userController');
-var utils = require('./lib/utils');
 var chat = require('./models/chatController');
 var matchController = require('./match/matchController');
 
 module.exports = function(socket) {
-  var place,username;
   //connect user to place if exists on the session
   // console.log('socket connected \n place: ',socket.handshake.session.placeName,"\n user: ", socket.handshake.session.user)
   console.log('socket connected\n session: ', socket.handshake.session);
