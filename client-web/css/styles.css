@@ -244,10 +244,6 @@ h2 {
   margin-left: 30px;
 }
 
-/*.lucky {
-  margin-left: 38px;
-}
-*/
 /* Chat View */
 
 #chat {
@@ -257,12 +253,19 @@ h2 {
 }
 
 .room-info {
+  background-color: #fff;
+  border-radius: 20px;
   display: table;
-  margin: 0 auto;
+  margin: 0 auto -15px;
+  padding: 30px 30px 40px;
+  width: 510px;
 }
 
 .room-info li {
+  color: #00BBEE;
   float: left;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .room-info li:first-child {
@@ -270,11 +273,14 @@ h2 {
 }
 
 .messages-container {
+  background-color: #fff;
+  border-radius: 0 0 20px 20px;
+  border-top: 1px #00BBEE solid;
   clear: both;
-  height: 350px;
+  height: 400px;
   overflow: auto;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  padding: 25px 30px 0;
   text-align: left;
 }
 
