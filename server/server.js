@@ -3,8 +3,8 @@ var config = require('./config.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
-var chat = require('./models/chatController')
+var morgan = require('morgan');
+var chat = require('./models/chatController');
 
 var MongoStore = require('connect-mongo')(session);
 var db = require('./db.js')
@@ -20,7 +20,7 @@ var port = require('./config.js').port;
 var express = require('express');
 
 var app = express();
-
+app.use(morgan('dev'));
 var sessionHandler = session({
   // should make session persist even if server crashes
   store: new MongoStore({ mongooseConnection: db.connection }),
