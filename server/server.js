@@ -88,10 +88,11 @@ io.on('connection',function(socket){
     //save new place to session
     // console.log(session)
     session.place = data.place;
+    session.placeName = data.placeName;
     session.save();
     // console.log('place',session.place)
     //**** create new chatroom *****
-    chat.addChatroom(session.place)
+    chat.addChatroom({ place: session.place, placeName: session.placeName})
     .then(function(chatroom){
       return chat.addUserToChatroom(chatroom,session.user.name)
     })

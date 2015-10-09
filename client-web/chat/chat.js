@@ -4,6 +4,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
   function($scope, Socket, User) {
 
     $scope.chatMessages = [];
+    // console.log("user current ",User.current())
     $scope.user = User.current();
     // $scope.roomname = Room.current();
 

@@ -2,9 +2,9 @@ var Chatroom = require('./chatModel').Chatroom;
 var Message = require('./chatModel').Message;
 var User = require('./userModel').User;
 
-module.exports.addChatroom = function(place) {
+module.exports.addChatroom = function(data) {
   return Chatroom
-  .findOne({place:place})
+  .findOne({place:data.place})
   .then(function(chatroom){
     if (chatroom){
       console.log('chatroom already exists')
@@ -60,9 +60,6 @@ module.exports.getMessages = function (place) {
       return chatroom.messages
     }
     throw new Error("could not find chatroom")
-  })
-  .catch(function(err) {
-    console.log(err);
   })
   // .populate("messages")
   // .exec();
