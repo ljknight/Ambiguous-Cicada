@@ -23,7 +23,7 @@ module.exports.login = function(username, password) {
     return user.comparePasswords(password)
     .then(function(foundUser){
       if (foundUser){
-        return user
+        return {id : user._id, name :user.username}
       }
       throw new Error('Wrong password');
     })
