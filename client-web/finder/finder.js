@@ -32,12 +32,12 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
     $window.initMap = function() {
 
       var spinner = Spinner.create();
-      spinner.spin(document.querySelector('.spinner'));
+      spinner.spin(document.querySelector('.map-spinner'));
 
       var mapOptions;
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
-      var infowindow = new google.maps.InfoWindow();
+      var infowindow = new google.maps.InfoWindow({maxWidth: 150});
 
       // Check for geolocation in order to center map
       if (!navigator.geolocation) {
@@ -170,7 +170,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           // Display directions on map and panel
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
-          $scope.place = '';
+          place = '';
        };
       };
 
