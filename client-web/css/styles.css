@@ -1,30 +1,162 @@
-h4, form {
-  display: inline-block;
-  text-align: center;
+/* Standard formatting */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.spinner {
+  /* TODO: center */
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+input {
+  background-color: #fff;
+  border: 1px #00BBEE solid;
+  height: 40px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+input, button {
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #00BBEE;
+  border-width: 0;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  width: 180px;
+}
+
+/* Nav View */
+
+#nav {
+  display: table;
+  margin: 0 auto 50px;
+}
+
+.nav li {
+  float: left;
+  font-size: 18px;
+  margin-right: 25px;
+}
+
+.nav li:last-child {
+  margin-right: 0;
+}
+
+.nav a {
+  background-color: #FFC900;
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px 30px;
+}
+
+.logo {
+  /* Image used for demo purposes -- source: Club Penguin */
+  background-image: url('../img/logo.png');
+  background-repeat: no-repeat;
+  background-size: 60px;
+  height: 60px;
+  width: 60px;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Map View */
+
+/* Google map must have height & width to render */
+#map {
+  float: left;
+  height: 420px;
+  margin-left: 10%;
+  margin-right: 50px;
+  width: 600px;
+}
+
+.input-container {
 }
 
 #place-input {
  background-color: #fff;
- font-family: Roboto;
- font-size: 15px;
+ clear: both;
  font-weight: 300;
  margin-left: 12px;
  padding: 0 11px 0 13px;
  text-overflow: ellipsis;
- width: 300px;
 }
 
-/* Google map must have height & width to render */
-#map {
- float: left;
- height: 420px;
- margin-right: 50px;
- width: 600px;
+#place-input, #directions {
+  width: 400px;
 }
 
 #directions {
   float: left;
   font-size: 14px;
   height: 200px;
-  width: 400px;
+  margin-left: 12px;
+}
+
+.map-button {
+  clear: both;
+  margin-top: 25px;
+  margin-left: 12px;
+  margin-bottom: 25px;
+}
+
+.lucky {
+  margin-left: 38px;
+}
+
+/* Chat View */
+
+#chat {
+  margin: 0 auto;
+  text-align: center;
+  width: 510px;
+}
+
+.messages {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.date {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.message {
+
+}
+
+#chat input {
+  margin-right: 25px;
+}
+
+#chat form {
+  margin-bottom: 100px;
 }

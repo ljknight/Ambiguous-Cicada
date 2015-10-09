@@ -1,14 +1,11 @@
 angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.spinner'])
 
-.controller('FinderController', ['$scope', '$state','$window', 'Socket', 'User', 'Spinner',
+.controller('FinderController', ['$scope', '$state', '$window', 'Socket', 'User', 'Spinner',
   function($scope, $state, $window, Socket, User, Spinner) {
-    $scope.disableButton = false;
 
     $scope.place = '';
 
     $scope.submit = function() {
-      // TODO: button gets stuck disabled
-      $scope.disableButton = true;
       Socket.emit('joinRoom', {
         username: User.current(),
         place: $scope.place
@@ -60,7 +57,10 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
 
             console.log('found position:', position);
 
-            Socket.emit('setPosition', {lat: position.coords.latitude, lng: position.coords.longitude});
+            Socket.emit('setPosition', {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
 
             var pos = {
               lat: position.coords.latitude,
@@ -185,11 +185,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
         });
       };
     };
-
-    // Load map here instead of inside script on index.html to get rid of console errors
-    // $window.onload = function () { 
-    //   initMap();
-    // };
 
     // Loads map on state change
     $scope.$on('$stateChangeSuccess', function() {

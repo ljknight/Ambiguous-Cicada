@@ -1,11 +1,15 @@
 <div>
-  <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
   <div id="map"></div>
   <div class="spinner"></div>
-  <div id="directions"></div>
+  <div class="input-container">
+    <input ng-model="place" id="place-input" type="text" placeholder="Enter a location">
+  </div>
+  <ul class="button-container">
+    <button ng-click='submit()'>Find me a kwiki!</button>
+    <button ng-click='lucky()'>I'm feeling lucky!</button>
   <button ng-click='directions()'>Get directions</button>
-  <button ng-click='submit()'>Find me a kwiki!</button>
-  <button ng-click='lucky()'>I'm feeling lucky!</button>
-  <p>Search for a match within {{radius}} miles</p>
+  </ul>
+  <div id="directions"></div>
+  <div class="search-match">Search for a match within {{radius}} miles</div>
   <input type="range" step=".5" min=".5" max="10" value="5" ng-init="radius = 5" ng-model="radius">
 </div>
