@@ -6,13 +6,13 @@ module.exports = function(socket) {
   var session  = socket.request.session
   var place,username;
   //connect user to place if exists on the session
-  console.log('socket connected \n place: ',session.place,"\n user: ",session.user)
+  console.log('socket connected \n place: ',session.placeName,"\n user: ",session.user)
 
   if (session.user){
     if (session.place){
       chat.getMessages(session.place)
       .then(function(messages){
-        socket.emit('populateChat',messages);
+        socket.emit('populateChat',{messages:messages,placeName:session.placeName});
       })
       socket.join(session.place.toString());
     }
@@ -73,10 +73,11 @@ module.exports = function(socket) {
     //save new place to session
     // console.log(session)
     session.place = data.place;
+    session.placeName = data.placeName;
     session.save();
     // console.log('place',session.place)
     //**** create new chatroom *****
-    chat.addChatroom(session.place)
+    chat.addChatroom(session.place,session.placeName)
     .then(function(chatroom){
       return chat.addUserToChatroom(chatroom,session.user.name)
     })
@@ -92,7 +93,7 @@ module.exports = function(socket) {
     //join chat room with the name of the address
     session.room = place;
     socket.join(session.place.toString());
-    console.log(session.user.name,' joined a room place: ',session.place)
+    console.log(session.user.name,' joined room: ',session.placeName)
   });
 
   socket.on('rejoinPlace', function() {
@@ -101,14 +102,14 @@ module.exports = function(socket) {
 
   socket.on('leavePlace', function(){
     socket.leave(socket.room);
-    console.log(username,' left the room ',session.place);
+    console.log(username,' left the room ',session.placeName);
     //remove address property on session
     delete session.place;
   });
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-      console.log(session.user.name,' sent a message to: ',session.place)
+      console.log(session.user.name,' sent a message to: ',session.placeName)
 
     // console.log('sended message: ',msg)
     // if (session.room === session.place){
