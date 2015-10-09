@@ -3,12 +3,13 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
 .controller('FinderController', ['$scope', '$state', '$window', 'Socket', 'User', 'Spinner',
   function($scope, $state, $window, Socket, User, Spinner) {
 
-    $scope.place = '';
+    var place;
+    var placeID;
 
     $scope.submit = function() {
-      Socket.emit('joinRoom', {
+      Socket.emit('joinPlace', {
         username: User.current(),
-        place: $scope.place
+        place: placeID
       });
       $state.transitionTo('chat');
     };
@@ -119,7 +120,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           //Invoke getPlace method and returns PlaceResult
           place = autocomplete.getPlace();
           //Store place_id
-          $scope.place = place.place_id;
+          placeID = place.place_id;
           //If place has no location, return out of function
           if (!place.geometry) {
             return;
@@ -163,7 +164,7 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           // Display directions on map and panel
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
-          $scope.place = '';
+          place = '';
         };
       };
 
