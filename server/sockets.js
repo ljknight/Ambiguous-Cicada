@@ -13,8 +13,8 @@ module.exports = function(socket) {
       chat.getMessages(socket.request.session.place)
       .then(function(messages){
         socket.emit('populateChat',{messages:messages,placeName:socket.request.session.placeName});
-      })
-      socket.join(socket.request.session.place.toString());
+      });
+      socket.join(socket.request.session.place);
     }
   }
 
@@ -32,6 +32,7 @@ module.exports = function(socket) {
     auth.login(data.username, data.password)
       .then(function(user) {
         socket.request.session.user = user;
+        socket.request.session.save();
         // TODO: maybe use the username from the returned user from database?
         socket.emit('loginSuccess', {token: user, name: data.username});
       })
@@ -47,14 +48,15 @@ module.exports = function(socket) {
         socket.emit('error', {err: err});
       } else {
         socket.emit('logoutSuccess');
+        socket.request.session.save();
       }
     });
   });
 
   socket.on('setPosition', function(data) {
-    console.log('setting position: ', data)
+    console.log('setting position: ', data);
     socket.request.session.coords = data;
-    // socket.requeset.session.save();
+    socket.request.session.save();
   });
 
   socket.on('feelingLucky', function(data) {
@@ -77,23 +79,23 @@ module.exports = function(socket) {
     socket.request.session.save();
     // console.log('place',session.place)
     //**** create new chatroom *****
-    chat.addChatroom(socket.request.session.place, socket.request.session.placeName)
+    chat.addChatroom(data)
     .then(function(chatroom){
-      return chat.addUserToChatroom(chatroom, socket.request.session.user.name)
+      return chat.addUserToChatroom(chatroom, socket.request.session.user.name);
     })
-    .then(function(chatroom){
+    .then(function(chatroom) {
       // console.log('saved: ',chatroom)
       return chat
       .getMessages(socket.request.session.place)
-      .then(function(messages){
+      .then(function(messages) {
         console.log('messages', messages);
         socket.emit('populateChat', messages);
-      })
-    })
+      });
+    });
     //join chat room with the name of the address
-    socket.request.session.room = place;
-    socket.join(socket.request.session.place.toString());
-    console.log(socket.request.session.user.name,' joined room: ', socket.request.session.placeName)
+    socket.request.session.room = data.place;
+    socket.join(socket.request.session.room);
+    console.log(socket.request.session.user.name,' joined room: ', socket.request.session.placeName);
   });
 
   socket.on('rejoinPlace', function() {
@@ -127,6 +129,6 @@ module.exports = function(socket) {
   //completely disconnect
   socket.on('disconnect', function(){
     console.log('Socket '+ socket.id +' disconnected.');
-    socket.disconnect();
+    // socket.disconnect();
   });
 };
