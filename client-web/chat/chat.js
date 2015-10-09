@@ -21,6 +21,8 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
         });
       }
       $scope.$apply();
+      // Async - must load chats before scrolling to top
+      scrollToTop();
     });
 
     Socket.on('chatMessage', function(msg) {
@@ -33,16 +35,21 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
       $scope.$apply();
     });
 
-    setInterval(function() {
-      for (var i = 0; i < $scope.chatMessages.length; i++) {
-        console.log($scope.chatMessages[i].humanTime);
-        $scope.chatMessages[i].humanTime = moment($scope.chatMessages[i].createdAt).fromNow();
-      }
-      $scope.$apply();
-    }, 30 * Math.pow(10, 3));
+    // Update time every 30 sec  
+    // setInterval(function() {
+    //   for (var i = 0; i < $scope.chatMessages.length; i++) {
+    //     // console.log($scope.chatMessages[i].humanTime);
+    //     $scope.chatMessages[i].humanTime = moment($scope.chatMessages[i].createdAt).fromNow();
+    //   }
+    //   $scope.$apply();
+    // }, 30 * Math.pow(10, 3));
+
+    var scrollToTop = function() {
+      var messagesContainer = document.getElementsByClassName('messages-container')[0];
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
 
     $scope.sendMessage = function() {
-      console.log('current User: ', User.current());
       if ($scope.messageInput) {
         Socket.emit('sendMessage', $scope.messageInput);
         $scope.chatMessages.push({
@@ -54,7 +61,5 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
         $scope.messageInput = '';
       }
     };
-    // var messagesContainer = document.getElementsByClassName('messages-container')[0]; 
-    // messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 ]);
