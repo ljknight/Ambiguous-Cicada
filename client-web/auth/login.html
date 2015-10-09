@@ -1,13 +1,22 @@
 <div>
-<h4>Log In</h4>
-<form>
+
+  <div class="header">
+    <img class="login-logo" src="./img/logo.png">
+    
+    <h1>kwiki-<span style="color: #00BBEE;">web</span></h1>
+    <h2>People, inside your browser</h2>
+    
+  </div>
+
+<!-- <h1>Sign In</h1> -->
+<form class="auth">
   <input ng-model='user.username' type='text' placeholder='username'>
   <input ng-model='user.password' type='password' placeholder='password'>
   <!-- TODO: since username/password are modeled on scope, we don't need to pass them here -->
-  <input ng-click='logIn(user)' type='submit'>
-  <a href="/auth/google">Sign in with Google</a>
+  <button class="submit" ng-click='logIn(user)'>Submit</button>
+  <a class="google" href="/auth/google">Sign in with Google</a>
+  <div class="link"><a href="/#/signup">Don't have an account? Sign Up</a></div>
 </form>
 </div>
 
 <!-- TODO: ui-router refactor -->
-<a href="/#/signup">Sign Up</a>
