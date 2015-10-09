@@ -1,7 +1,8 @@
 var router = require('express').Router();
 
-var auth = require('./auth/auth');
+var auth = require('./models/userController');
 var utils = require('./lib/utils');
+var chat = require('./models/chatController');
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -37,6 +38,7 @@ router.get('/auth/google/token', function(req, res) {
   res.json(req.session.user);
 });
 
+//************* Authentication Routes **************
 router.post('/signup', function(req, res) {
   auth.signup(req.body.username, req.body.password)
   .then(function(result) {
@@ -44,6 +46,7 @@ router.post('/signup', function(req, res) {
     .send(JSON.stringify(result));
   })
   .catch(function(err) {
+    console.log(err)
     res.status(300)
     .send(err);
   });
@@ -58,6 +61,7 @@ router.post('/login', function(req, res) {
     });
   })
   .catch(function(err) {
+    console.log(err)
     res.status(300)
     .send(err);
   });
