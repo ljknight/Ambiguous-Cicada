@@ -123,15 +123,14 @@ io.on('connection',function(socket){
 
   socket.on('joinPlace', function(data){
     //save new place to session
-    console.log(session.user,' joined a room \n place: ',session.place)
-    console.log(session)
+    // console.log(session)
     session.place = data.place;
     session.save();
     // console.log('place',session.place)
     //**** create new chatroom *****
     chat.addChatroom(session.place)
     .then(function(chatroom){
-      return chat.addUserToChatroom(chatroom,username)
+      return chat.addUserToChatroom(chatroom,session.user.name)
     })
     .then(function(chatroom){
       // console.log('saved: ',chatroom)
@@ -145,8 +144,7 @@ io.on('connection',function(socket){
     //join chat room with the name of the address
     session.room = place;
     socket.join(session.place.toString());
-
-    console.log(session.user.username,' joined room ', session.place);
+    console.log(session.user.name,' joined a room \n place: ',session.place)
   });
 
   socket.on('rejoinPlace', function() {
@@ -164,15 +162,15 @@ io.on('connection',function(socket){
   socket.on('sendMessage',function(msg){
     // console.log('sended message: ',msg)
     // if (session.room === session.place){
-      console.log('sessions user: ',session.user)
-      chat.addMessage(session.place,msg,session.user.username)
+      console.log(session.user.name,' sent message \n to room : ',session.place)
+      chat.addMessage(session.place,msg,session.user.name)
       .then(function(chatroom){
         console.log('message saved: ',chatroom)
       })      
     // }
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(session.place).emit('chatMessage', msg);
+    socket.broadcast.to(session.place).emit('chatMessage', {text:msg,username:session.user.name});
   });
 
   //completely disconnect

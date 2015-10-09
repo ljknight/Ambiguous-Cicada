@@ -5,7 +5,7 @@ var Schema = db.Schema,
 var MessageSchema = new Schema({
   username: String,
   text: String,
-  timestamp: Date
+  timestamp: {type:Date,default:Date.now}
 });
 
 var ChatroomSchema = new Schema({
@@ -18,7 +18,7 @@ var ChatroomSchema = new Schema({
     id: String,
     username: String,
     text: String,
-    timestamp: Date
+    timestamp: {type:Date,default:Date.now}
   }]
   // messages: [{
   //   type: ObjectId,

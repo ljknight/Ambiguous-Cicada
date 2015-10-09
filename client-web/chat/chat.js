@@ -12,7 +12,8 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
         $scope.chatMessages.push({
          user: msg.username,
          text: msg.text,
-         humanTime: moment(msg.createdAt).fromNow()
+         timestamp: msg.timestamp,
+         humanTime: moment(msg.timestamp).fromNow()
        });
       };
       $scope.$apply();
@@ -22,7 +23,8 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
       $scope.chatMessages.unshift({
         user: msg.username,
         text: msg.text,
-        humanTime: moment(msg.createdAt).fromNow()
+        timestamp: new Date(),
+        humanTime: moment(new Date()).fromNow()
       });
       $scope.$apply();
     });
@@ -42,6 +44,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
         $scope.chatMessages.unshift({
           user: User.current(),
           text: $scope.messageInput,
+          timestamp: new Date(),
           humanTime: moment(new Date()).fromNow()
         });
         $scope.messageInput = '';
