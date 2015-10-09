@@ -130,12 +130,14 @@ button {
 /* Chat View */
 
 #chat {
-  margin-left: 10%;
+  margin: 0 auto;
+  text-align: center;
+  width: 510px;
 }
 
 .messages {
   margin-bottom: 25px;
-  
+  text-align: left;
 }
 
 .date {
