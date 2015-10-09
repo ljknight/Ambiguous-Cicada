@@ -3,6 +3,7 @@ var config = require('./config.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var socketSession = require('express-socket.io-session');
 var morgan = require('morgan');
 
 var MongoStore = require('connect-mongo')(session);
@@ -35,10 +36,10 @@ app.use("/", express.static(__dirname + '/../client-web'));
 //new internal dependencies
 var router = require('./routes.js');
 
-//mount middleware to io request, now we have access to socket.request.session
-io.use(function(socket, next) {
-  sessionHandler(socket.request, socket.request.res, next);
-});
+//mount middleware to io request, now we have access to socket.handshake.session
+io.use(socketSession(sessionHandler, {
+  autoSave: true
+}));
 
 //***************** Sockets *******************
 //listen for connection event for incoming sockets
