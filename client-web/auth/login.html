@@ -14,7 +14,7 @@
   <input ng-model='user.password' type='password' placeholder='password'>
   <!-- TODO: since username/password are modeled on scope, we don't need to pass them here -->
   <button class="submit" ng-click='logIn(user)'>Submit</button>
-  <a class="google" href="/auth/google">Sign in with Google</a>
+  <button class="google"><a href="/auth/google">Sign in with Google</a></button>
   <div class="link"><a href="/#/signup">Don't have an account? Sign Up</a></div>
   <div class="spinner"></div>
   <div class="error" ng-show="error"> {{error}}</div>
