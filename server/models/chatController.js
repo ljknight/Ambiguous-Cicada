@@ -61,6 +61,9 @@ module.exports.getMessages = function (place) {
     }
     throw new Error("could not find chatroom")
   })
+  .catch(function(err) {
+    console.log(err);
+  })
   // .populate("messages")
   // .exec();
 };

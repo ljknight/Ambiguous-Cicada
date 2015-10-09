@@ -20,7 +20,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
     })
 
     Socket.on('chatMessage', function(msg) {
-      $scope.chatMessages.unshift({
+      $scope.chatMessages.push({
         user: msg.username,
         text: msg.text,
         timestamp: new Date(),
@@ -41,7 +41,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user'])
       console.log('current User: ',User.current())
       if ($scope.messageInput) {
         Socket.emit('sendMessage', $scope.messageInput);
-        $scope.chatMessages.unshift({
+        $scope.chatMessages.push({
           user: User.current(),
           text: $scope.messageInput,
           timestamp: new Date(),
