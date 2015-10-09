@@ -32,12 +32,12 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
     $window.initMap = function() {
 
       var spinner = Spinner.create();
-      spinner.spin(document.querySelector('.spinner'));
+      spinner.spin(document.querySelector('.map-spinner'));
 
       var mapOptions;
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
-      var infowindow = new google.maps.InfoWindow();
+      var infowindow = new google.maps.InfoWindow({maxWidth: 150});
 
       // Check for geolocation in order to center map
       if (!navigator.geolocation) {
@@ -118,6 +118,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
         });
 
         autocomplete.addListener('place_changed', function() {
+          directionsDisplay.setMap(null);
+          directionsDisplay.setPanel(null);
           infowindow.close();
           //Invoke getPlace method and returns PlaceResult
           place = autocomplete.getPlace();
@@ -169,24 +171,24 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
           place = '';
-        };
+       };
       };
 
       // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
       var calcRoute = function() {
-        var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
-        // End uses location object with lat(J), long(M) returned after user selects a place 
-        var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
-
-        var request = {
-          origin: start,
-          destination: end,
-          travelMode: google.maps.TravelMode.WALKING
-        };
-        directionsService.route(request, function(result, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(result);
-          }
+         var start = new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng);
+         // End uses location object with lat(J), long(M) returned after user selects a place 
+         var end = new google.maps.LatLng(place.geometry.location.J, place.geometry.location.M);
+ 
+         var request = {
+           origin: start,
+           destination: end,
+           travelMode: google.maps.TravelMode.WALKING
+         };
+         directionsService.route(request, function(result, status) {
+           if (status == google.maps.DirectionsStatus.OK) {
+             directionsDisplay.setDirections(result);
+           }
         });
       };
     };
