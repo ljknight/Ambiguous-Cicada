@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('kwiki.auth', ['services.user'])
 
 .controller('AuthController', ['$scope', '$state', '$window', 'User', 'Spinner',
@@ -50,4 +51,4 @@ angular.module('kwiki.auth', ['services.user'])
           $state.transitionTo('login');
         });
     };
-}]);
+  }]);

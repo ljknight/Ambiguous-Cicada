@@ -1,10 +1,8 @@
 var auth = require('./models/userController');
-var utils = require('./lib/utils');
 var chat = require('./models/chatController');
 var matchController = require('./match/matchController');
 
 module.exports = function(socket) {
-  var place,username;
   //connect user to place if exists on the session
   // console.log('socket connected \n place: ',socket.handshake.session.placeName,"\n user: ", socket.handshake.session.user)
   console.log('socket connected\n session: ', socket.handshake.session);
@@ -111,7 +109,7 @@ module.exports = function(socket) {
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-      console.log(socket.handshake.session.user.name, ' sent a message to: ', socket.handshake.session.room);
+    console.log(socket.handshake.session.user.name, ' sent a message to: ', socket.handshake.session.room);
 
     // console.log('sended message: ',msg)
     if (socket.handshake.session.room === socket.handshake.session.place) {
