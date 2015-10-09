@@ -77,8 +77,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
             // Async
             createMap();
 
-            infowindow.setPosition(pos);
-            infowindow.setContent('Location found.');
+            // infowindow.setPosition(pos);
+            // infowindow.setContent('Location found.');
             $scope.map.setCenter(pos);
           }, function() {
             handleLocationError(true, infowindow, map.getCenter());
@@ -120,8 +120,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           place = autocomplete.getPlace();
           //Store place_id
           $scope.place = place.place_id;
-          // Call calcRoute once a place has been selected
-          calcRoute();
           //If place has no location, return out of function
           if (!place.geometry) {
             return;
@@ -145,12 +143,28 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           marker.setVisible(true);
 
           // Set text displayed in infowindow
+          if (place.website === undefined || place.formatted_phone_number === undefined) {
+            place.website = '';
+            place.formatted_phone_number = '';
+          }
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-            place.formatted_address);
+            place.formatted_address +
+            '<br><br><a href="' + place.website + '">' + place.website + '</a><br>' +
+            place.formatted_phone_number);
           infowindow.open($scope.map, marker);
         });
-        directionsDisplay.setMap($scope.map);
-        directionsDisplay.setPanel(document.getElementById("directions"));
+
+
+        $scope.directions = function() {
+          //Hide marker
+          marker.setVisible(false);
+          // Call calcRoute once a place has been selected
+          calcRoute();
+          // Display directions on map and panel
+          directionsDisplay.setMap($scope.map);
+          directionsDisplay.setPanel(document.getElementById("directions"));
+          $scope.place = '';
+        };
       };
 
       // Directions reference: https://developers.google.com/maps/documentation/javascript/directions
