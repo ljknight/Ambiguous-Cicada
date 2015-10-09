@@ -6,17 +6,11 @@ var session = require('express-session');
 var morgan = require('morgan');
 
 var MongoStore = require('connect-mongo')(session);
-var db = require('./db.js')
+var db = require('./db.js');
 
 var secret = require('./secret.js');
 
-var MongoStore = require('connect-mongo')(session);
-var db = require('./db.js');
-var matchController = require('./match/matchController');
-
 var port = require('./config.js').port;
-
-var express = require('express');
 
 var app = express();
 app.use(morgan('dev'));
@@ -42,8 +36,8 @@ app.use("/", express.static(__dirname + '/../client-web'));
 var router = require('./routes.js');
 
 //mount middleware to io request, now we have access to socket.request.session
-io.use(function(socket,next){
-  sessionHandler(socket.request, socket.request.res, next)
+io.use(function(socket, next) {
+  sessionHandler(socket.request, socket.request.res, next);
 });
 
 //***************** Sockets *******************

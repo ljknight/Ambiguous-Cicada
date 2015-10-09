@@ -6,6 +6,8 @@ var pool = {};
 pool.storage = [];
 
 pool.add = function(socket, radius) {
+  console.log('Socket finding match...');
+  console.log(socket.request.session);
   var item = {
     socket: socket,
     coords: socket.request.session.coords,
@@ -17,10 +19,11 @@ pool.add = function(socket, radius) {
   _.each(this.storage, function(waiter) {
 
     if (isMatch(item, waiter)) {
-      console.log('found match: ', item.socket.request.session.user.name, waiter.socket.request.session.user.name);
 
       matched = true;
       var newRoom = item.socket.id + waiter.socket.id;
+      console.log('found match: ', item.socket.request.session.user.name, waiter.socket.request.session.user.name);
+      console.log('new room ID: ', newRoom);
 
       item.socket.join(newRoom);
       item.socket.request.session.room = newRoom;

@@ -4,18 +4,17 @@ var chat = require('./models/chatController');
 var matchController = require('./match/matchController');
 
 module.exports = function(socket) {
-  var session  = socket.request.session
   var place,username;
   //connect user to place if exists on the session
-  console.log('socket connected \n place: ',session.placeName,"\n user: ",session.user)
+  console.log('socket connected \n place: ',socket.request.session.placeName,"\n user: ", socket.request.session.user)
 
-  if (session.user){
-    if (session.place){
-      chat.getMessages(session.place)
+  if (socket.request.session.user){
+    if (socket.request.session.place){
+      chat.getMessages(socket.request.session.place)
       .then(function(messages){
-        socket.emit('populateChat',{messages:messages,placeName:session.placeName});
+        socket.emit('populateChat',{messages:messages,placeName:socket.request.session.placeName});
       })
-      socket.join(session.place.toString());
+      socket.join(socket.request.session.place.toString());
     }
   }
 
@@ -54,8 +53,8 @@ module.exports = function(socket) {
 
   socket.on('setPosition', function(data) {
     console.log('setting position: ', data)
-    session.coords = data;
-    session.save();
+    socket.request.session.coords = data;
+    // socket.requeset.session.save();
   });
 
   socket.on('feelingLucky', function(data) {
@@ -67,62 +66,62 @@ module.exports = function(socket) {
   });
 
   socket.on('leaveLuckyRoom', function() {
-    socket.leave(session.room);
+    socket.leave(socket.request.session.room);
   });
 
   socket.on('joinPlace', function(data){
     //save new place to session
     // console.log(session)
-    session.place = data.place;
-    session.placeName = data.placeName;
-    session.save();
+    socket.request.session.place = data.place;
+    socket.request.session.placeName = data.placeName;
+    socket.request.session.save();
     // console.log('place',session.place)
     //**** create new chatroom *****
-    chat.addChatroom(session.place,session.placeName)
+    chat.addChatroom(socket.request.session.place, socket.request.session.placeName)
     .then(function(chatroom){
-      return chat.addUserToChatroom(chatroom,session.user.name)
+      return chat.addUserToChatroom(chatroom, socket.request.session.user.name)
     })
     .then(function(chatroom){
       // console.log('saved: ',chatroom)
       return chat
-      .getMessages(session.place)
+      .getMessages(socket.request.session.place)
       .then(function(messages){
-        console.log('messages',messages)
-        socket.emit('populateChat',messages)
+        console.log('messages', messages);
+        socket.emit('populateChat', messages);
       })
     })
     //join chat room with the name of the address
-    session.room = place;
-    socket.join(session.place.toString());
-    console.log(session.user.name,' joined room: ',session.placeName)
+    socket.request.session.room = place;
+    socket.join(socket.request.session.place.toString());
+    console.log(socket.request.session.user.name,' joined room: ', socket.request.session.placeName)
   });
 
   socket.on('rejoinPlace', function() {
-    socket.join(session.place);
+    socket.join(socket.request.session.place);
   });
 
   socket.on('leavePlace', function(){
-    socket.leave(socket.room);
-    console.log(username,' left the room ',session.placeName);
+    socket.leave(socket.request.session.place);
+    console.log(username,' left the room ',socket.request.session.placeName);
     //remove address property on session
-    delete session.place;
+    delete socket.request.session.place;
   });
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
-      console.log(session.user.name,' sent a message to: ',session.placeName)
+      console.log(socket.request.session.user.name, ' sent a message to: ', socket.request.session.room);
 
     // console.log('sended message: ',msg)
-    // if (session.room === session.place){
+    if (socket.request.session.room === socket.request.session.place) {
       // console.log(session.user.name,' sent message \n to room : ',session.place)
-      chat.addMessage(session.place,msg,session.user.name)
+      chat.addMessage(socket.request.session.place,msg, socket.request.session.user.name)
       .then(function(chatroom){
-        console.log('message saved: ',chatroom)
-      })      
-    // }
+        console.log('message saved: ', chatroom);
+      });
+    }
     //broadcast sends to everyone else, but not to self
     //every other socket in the same chatRoom group recieves a 'message event'
-    socket.broadcast.to(session.place).emit('chatMessage', {text:msg,username:session.user.name});
+    socket.broadcast.to(socket.request.session.room).emit('chatMessage', {text:msg, username: socket.request.session.user.name});
   });
 
   //completely disconnect
