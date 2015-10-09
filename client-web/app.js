@@ -117,7 +117,7 @@ angular.module('kwiki', [
 
 }])
 
-.run(['$rootScope', '$state', 'User', function ($rootScope, $state, User) {
+.run(['$rootScope', '$state', 'User', 'Socket', function ($rootScope, $state, User, Socket) {
   //this function listens for when angular changes states
   //when the state is changed, if the state requires authentication
   //local storage is checked for the JWT
@@ -129,5 +129,10 @@ angular.module('kwiki', [
       event.preventDefault(); //prevent state transition from happening
       $state.transitionTo('login'); //transitions state to login
     }
+
+    if (fromState === 'chat') {
+      Socket.emit('leaveRoom');
+    }
+
   });
 }]);

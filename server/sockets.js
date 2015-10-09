@@ -66,8 +66,9 @@ module.exports = function(socket) {
     matchController.cancelMatch(socket);
   });
 
-  socket.on('leaveLuckyRoom', function() {
+  socket.on('leaveRoom', function() {
     socket.leave(socket.handshake.session.room);
+    delete socket.handshake.session.room;
   });
 
   socket.on('joinPlace', function(data){
@@ -78,7 +79,7 @@ module.exports = function(socket) {
     // console.log('place',session.place)
     //**** create new chatroom *****
     chat.addChatroom(data)
-    .then(function(chatroom){
+    .then(function(chatroom) {
       return chat.addUserToChatroom(chatroom, socket.handshake.session.user.name);
     })
     .then(function(chatroom) {
@@ -96,16 +97,17 @@ module.exports = function(socket) {
     console.log(socket.handshake.session.user.name,' joined room: ', socket.handshake.session.placeName);
   });
 
-  socket.on('rejoinPlace', function() {
-    socket.join(socket.handshake.session.place);
-  });
+  // socket.on('rejoinPlace', function() {
+  //   socket.join(socket.handshake.session.place);
+  // });
 
-  socket.on('leavePlace', function(){
-    socket.leave(socket.handshake.session.place);
-    console.log(username,' left the room ',socket.handshake.session.placeName);
-    //remove address property on session
-    delete socket.handshake.session.place;
-  });
+  // socket.on('leavePlace', function(){
+  //   socket.leave(socket.handshake.session.room);
+  //   console.log(username,' left the room ',socket.handshake.session.placeName);
+  //   //remove address property on session
+  //   delete socket.handshake.session.room;
+  //   delete socket.handshake.session.place;
+  // });
 
   //if client socket emits send message
   socket.on('sendMessage',function(msg){
