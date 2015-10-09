@@ -1,3 +1,4 @@
+/*global angular, Spinner*/
 angular.module('services.spinner', [])
   .factory('Spinner', function() {
     var opts = {
@@ -27,6 +28,6 @@ angular.module('services.spinner', [])
       create: function() {
         return new Spinner(opts);
       }
-    }
+    };
   });
 

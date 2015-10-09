@@ -41,7 +41,7 @@ module.exports.addMessage = function (place, message,username) {
   return Chatroom.findOne({place: place})
   .then(function (chatroom) {
     if (chatroom){
-      console.log("found chatroom")
+      console.log("found chatroom");
       chatroom.messages.push({username:username,text:message,date:new Date()});
       return chatroom.save();      
     }

@@ -19,15 +19,15 @@ describe('Unauthenticated use of server API', function() {
 
   });
 
- it('Should not allow requests to /chats or /chats/:id without a session', function (done) {
+  it('Should not allow requests to /chats or /chats/:id without a session', function (done) {
 
-  request(app)
+   request(app)
     .get('/chats/5609bc39910405ef1082986e')
-    .expect(401)
+    .expect(401);
 
-  request(app)
+   request(app)
     .post('/chats/5609bc39910405ef1082986e')
-    .expect(401, done)
+    .expect(401, done);
 
  });
 
@@ -59,18 +59,18 @@ describe('Log in, log out and other authentication tests', function() {
 
   it('should not create session with invalid username and password to /login', function(done) {
     var credsN = '12435$%^#&%_',
-        credsP = ['1', '12', '123', '1234', '12345']
+      credsP = ['1', '12', '123', '1234', '12345'];
     for (var i = 0; i < credsN.length; i++) {
       request(app)
         .post('/signup')
         .send({ "username": credsN[i], "password": "123456" })
-        .expect(301)
+        .expect(301);
     }
     for (var i = 0; i < credsP.length; i++) {
       request(app)
         .post('/signup')
         .send({ "username": "dko"+i, "password": credsP[i] })
-        .expect(301)
+        .expect(301);
     }
 
   });
@@ -83,12 +83,12 @@ describe('Log in, log out and other authentication tests', function() {
     request(app)
       .post('/signup')
       .send(creds)
-      .expect(201)
+      .expect(201);
 
     request(app)
       .post('/signup')
       .send(creds)
-      .expect(301, done) // ???
+      .expect(301, done); // ???
   });
 
 });

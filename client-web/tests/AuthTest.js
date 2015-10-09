@@ -28,10 +28,10 @@ describe('Front-end Authentication', function(){
         $window: $window,
         $location: $location,
         Users: Users
-      })
-    }
+      });
+    };
 
-   createController();
+    createController();
 
   }));
 
@@ -47,15 +47,15 @@ describe('Front-end Authentication', function(){
 
   it('should have a signup method', function () {
     expect($scope.addUser).to.be.a('function');
-  })
+  });
 
   xit('Should not be able to view non login/signup pages without being signed in', function () {
     //without being signed in
       
-      $window.location = 'localhost:9876/#/signup';
-      expect($window.location).to.equal('localhost:9876/#/signup');
-      $window.location = 'localhost:9876/#/loading';      // $rootScope.$apply();
-      expect($window.location).to.equal('localhost:9876/#/login');
+    $window.location = 'localhost:9876/#/signup';
+    expect($window.location).to.equal('localhost:9876/#/signup');
+    $window.location = 'localhost:9876/#/loading';      // $rootScope.$apply();
+    expect($window.location).to.equal('localhost:9876/#/login');
       //set path to /#/loading, expect go to login page
       //set path to /#/chats, expect go to login page
     //
