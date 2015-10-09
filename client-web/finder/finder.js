@@ -115,7 +115,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
         });
 
         autocomplete.addListener('place_changed', function() {
-          $scope.beforeHitSubmit = true;
           infowindow.close();
           //Invoke getPlace method and returns PlaceResult
           place = autocomplete.getPlace();
@@ -144,6 +143,10 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           marker.setVisible(true);
 
           // Set text displayed in infowindow
+          if (place.website === undefined || place.formatted_phone_number === undefined) {
+            place.website = '';
+            place.formatted_phone_number = '';
+          }
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
             place.formatted_address +
             '<br><br><a href="' + place.website + '">' + place.website + '</a><br>' +
@@ -160,8 +163,6 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
           // Display directions on map and panel
           directionsDisplay.setMap($scope.map);
           directionsDisplay.setPanel(document.getElementById("directions"));
-          //Show directions on html page
-          $scope.beforeHitSubmit = false;
           $scope.place = '';
         };
       };
