@@ -1,4 +1,6 @@
 <div id="chat" ng-controller="ChatController" ng-init="loadChat()">
+  <div class="roomname">Current room: {{roomname}}<div>
+  <div class="username">Current user: {{user}}</div>
   <div class="messages" ng-repeat="data in chatMessages">
     <span class="date">{{data.humanTime}}</span>
     <span class="user">{{data.user}}</span>
