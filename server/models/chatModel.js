@@ -4,7 +4,7 @@ var Schema = db.Schema,
 
 var MessageSchema = new Schema({
   username: String,
-  text: String,
+  text: {type: String, maxlength: 140},
   timestamp: {type:Date,default:Date.now}
 });
 

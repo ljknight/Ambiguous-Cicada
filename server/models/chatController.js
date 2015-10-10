@@ -57,7 +57,7 @@ module.exports.getMessages = function (place) {
   .findOne({place: place})
   .then(function(chatroom){
     if (chatroom){
-      return chatroom.messages;
+      return chatroom.messages.slice(0, 25);
     }
     throw new Error("could not find chatroom");
   });
