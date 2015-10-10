@@ -37,13 +37,12 @@ router.use(passport.initialize());
 // Authentication Routes
 router.get('/auth/google', passport.authenticate('google', {scope: 'openid profile'}));
 
-router.get('/auth/google/return', passport.authenticate('google'), utils.createSession, function(req, res) {
-  console.log(req.session);
+router.get('/auth/google/return', passport.authenticate('google'), /*utils.createSession,*/ function(req, res) {
   res.redirect('/#/oauth');
 });
 
 router.get('/auth/google/token', function(req, res) {
-  res.json(req.session.user);
+  res.send(req.session.passport.user);
 });
 
 //************* Authentication Routes **************

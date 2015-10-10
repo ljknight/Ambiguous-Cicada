@@ -43,6 +43,12 @@ module.exports = function(socket) {
       });
   });
 
+  socket.on('googleLogin', function(data) {
+    socket.handshake.session.user = {
+      name: socket.handshake.session.passport.user
+    };
+  });
+
   socket.on('logout', function(data) {
     if (!socket.handshake.session.user) {
       // socket.emit('error', {err: new Error('No user logged in!')});
@@ -65,6 +71,8 @@ module.exports = function(socket) {
   });
 
   socket.on('leaveRoom', function() {
+    if (!socket.handshake.session.room) return;
+    console.log('leaving room ', socket.handshake.session.room);
     socket.leave(socket.handshake.session.room);
     delete socket.handshake.session.room;
   });
@@ -114,7 +122,7 @@ module.exports = function(socket) {
     // console.log('sended message: ',msg)
     if (socket.handshake.session.room === socket.handshake.session.place) {
       // console.log(session.user.name,' sent message \n to room : ',session.place)
-      chat.addMessage(socket.handshake.session.place,msg, socket.handshake.session.user.name)
+      chat.addMessage(socket.handshake.session.room, msg, socket.handshake.session.user.name)
       .then(function(chatroom){
         console.log('message saved: ', chatroom);
       });
