@@ -3,7 +3,7 @@
     <li><div class="roomname">Current room: {{roomname}}<div></li>
     <li><div class="username">Current user: {{user}}</div></li>
   </ul>
-  <div class="messages-container">
+  <div class="messages-container" scroll-glue>
     <div class="chat" ng-repeat="data in chatMessages">
       <span class="date">{{data.humanTime}}</span>
       <span class="user">{{data.user}}</span>

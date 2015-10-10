@@ -1,5 +1,5 @@
 /*global angular, moment*/
-angular.module('kwiki.chat', ['services.socket', 'services.user'])
+angular.module('kwiki.chat', ['services.socket', 'services.user', 'luegg.directives'])
 
 .controller('ChatController', ['$scope', 'Socket', 'User',
   function($scope, Socket, User) {
