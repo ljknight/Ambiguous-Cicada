@@ -10,7 +10,7 @@ angular.module('kwiki.chat', ['services.socket', 'services.user', 'luegg.directi
     Socket.on('populateChat', function(data) {
       var messages = data.messages;
       var placeName = data.placeName;
-      $scope.roomname = 'at ' + placeName || 'in a private chat';
+      $scope.roomname = placeName;
       for (var i = 0; i < messages.length; i++) {
         var msg = messages[i];
         $scope.chatMessages.push({
