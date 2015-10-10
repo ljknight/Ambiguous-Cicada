@@ -1,41 +1,25 @@
-# Project Name #
- 
-## Heading ##
+# Kwiki #
 
-kwiki™
-
-## Sub-Heading ##
-
-The market is anyone with spare time on their hands.
+People, inside your browser.
 
 ## Summary ##
 
-The product links people up based on when the free time and interests they have. It does this very smoothly by showing the people around you that have a few hours to kill and what they’re trying to do. if you and someone else has a similar interest/time opening, you can chat with them real quick and figure out what you want to do for the next few hours
-
+Kwiki is a web application that allows users to spontaneously meet other people based on location. Our map feature allows you to first choose a location and then join a group chat with people also interested in that place. If you're feeling adventurous, hit "I'm feeling lucky!" to be matched in a private chat with a random nearby user.
 
 ## Problem ##
 
-Sometimes people are bored and want to do stuff with other people.
+You find yourself wanting to try out a new restaurant, hang out in the park, grab a drink at a bar, or check out a museum, but none of your friends are free to join you--and you don't want to go alone.
 
 ## Solution ##
 
-Make the spare time people have during their day exciting and fun by meeting a nearby stranger with similar interests.
-
-## Quote from You ##
-
-“With kwiki, you’ll never be bored!”
+Give people a simple platform for making connections based on interest and location.
 
 ## How to Get Started ##
 
-Simply sign in and meet up with nearby friendly people right away!
+Sign in and meet up with nearby people right away.
 
-## Customer Quote ##
+## Customer Quotes ##
 
-“I was really bored one day and this app turned my whole day around!” - Kyle Cho
+“I was really bored one day, and this app turned my whole day around!” - Kyle Cho
 
-## Closing and Call to Action ##
-
-Go to kwiki.com or download the app today.
-
-
-
+"I met Kyle Cho!" - Taylor Lehman
