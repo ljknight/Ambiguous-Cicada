@@ -4,6 +4,8 @@ angular.module('kwiki.finder', ['services.socket', 'services.user', 'services.sp
 .controller('FinderController', ['$scope', '$state', '$window', 'Socket', 'User', 'Spinner',
   function($scope, $state, $window, Socket, User, Spinner) {
 
+    Socket.emit('leaveRoom');
+
     var place;
     var placeID;
     var placeName;
