@@ -340,6 +340,20 @@ h2 {
 }
 
 /* Waiting page */
+
+.kwiki {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding-left: 50px;
+  text-align: center;
+}
+
+.kwiki-spinner {
+  margin: 0 auto;
+  margin-left: 600px;
+}
+
 .cancel {
   margin: 0 auto;
   margin-top: 200px;
