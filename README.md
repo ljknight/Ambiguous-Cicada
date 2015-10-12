@@ -1,8 +1,8 @@
 [![Stories in Ready](https://badge.waffle.io/Ambiguous-Cicada/Ambiguous-Cicada.png?label=ready&title=Ready)](https://waffle.io/Ambiguous-Cicada/Ambiguous-Cicada)
 
-# Kwiki
+# Rapport
 
-Kwiki is a mobile and web chat application that brings closeby users together.
+Rapport is a mobile and web chat application that brings closeby users together.
 
 Refer to our [Documentation](DOCS.md) for internal details of our app.
 
@@ -12,7 +12,7 @@ Refer to our [Documentation](DOCS.md) for internal details of our app.
   - __Scrum Master__: JT Knox
   - __Development Team__: Niraj Vora, Michael Junio, Daniel O'Leary, JT Knox
 
-## Legacy Kwiki Team
+## Legacy Rapport Team
 
   - __Product Owner__: Laura Knight
   - __Scrum Master__: Cynthia Chen

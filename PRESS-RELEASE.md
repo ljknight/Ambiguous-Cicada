@@ -1,10 +1,10 @@
-# Kwiki #
+# Rapport #
 
 People, inside your browser.
 
 ## Summary ##
 
-Kwiki is a web application that allows users to spontaneously meet other people based on location. Our map feature allows you to first choose a location and then join a group chat with people also interested in that place. If you're feeling adventurous, hit "I'm feeling lucky!" to be matched in a private chat with a random nearby user.
+Rapport is a web application that allows users to spontaneously meet other people based on location. Our map feature allows you to first choose a location and then join a group chat with people also interested in that place. If you're feeling adventurous, hit "I'm feeling lucky!" to be matched in a private chat with a random nearby user.
 
 ## Problem ##
 
