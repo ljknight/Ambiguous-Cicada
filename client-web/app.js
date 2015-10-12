@@ -132,7 +132,6 @@ angular.module('kwiki', [
     }
 
     if (fromState === 'chat') {
-      Socket.emit('leaveRoom');
     }
 
   });

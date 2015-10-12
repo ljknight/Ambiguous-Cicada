@@ -1,7 +1,7 @@
 {
-  "name": "kwiki",
+  "name": "rapport",
   "version": "1.0.0",
-  "description": "setting up kwikis",
+  "description": "establishing rapports",
   "main": "server/server.js",
   "scripts": {
     "start": "nodemon --watch server/ server/server.js",
